@@ -17,4 +17,3 @@ VPYTHON_COLOR_MAP = {
     'black': vector(0,0,0)
 }
 
-import src.newton_cradle_run as main

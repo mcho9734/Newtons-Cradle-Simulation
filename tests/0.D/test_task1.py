@@ -1,9 +1,12 @@
 from vpython import *
 import pytest, os, sys # type: ignore
-from src.constants import *
-from src.sheets_api import *
+
+from src.sheets_api import get_values, update_values, get_pendulum_info
 from tests.helpers.fake_objects import *
 from tests.helpers.constants_for_testing import *
+from src.constants import *
+
+import src.special_cradles as main
 
 @pytest.mark.parametrize("mass",[
     (5),(2),(1)
@@ -103,3 +106,5 @@ def test_make_newton_cradle_attributes():
         assert pend_dict["theta"] == (THETA_INIT if i == 0 else 0) # checking theta initialisation
         assert pend_dict["omega"] == 0 # checking omega initialisation
 
+        assert pend_dict["masses"] == sheet_pend_dict["masses"]
+        assert pend_dict ["restitution_coeffs"] == sheet_pend_dict["restitution_coeffs"]

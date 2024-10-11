@@ -5,6 +5,7 @@ from src.sheets_api import *
 from tests.helpers.fake_objects import *
 from tests.helpers.constants_for_testing import *
 
+import src.swinging as main
 
 @pytest.mark.parametrize("theta1, omega1, theta2, omega2, r_param, dt, g, \
                          expected_omega1, expected_theta1, expected_omega2, \

@@ -1,10 +1,11 @@
 from vpython import *
 import pytest, os, sys # type: ignore
-from src.constants import *
-from src.sheets_api import *
+from .constants import *
+from .sheets_api import *
 from tests.helpers.fake_objects import *
-from tests.helpers.test_constants import *
+from tests.helpers.constants_for_testing import *
 
+import newton_cradle_run as main
 
 @pytest.mark.parametrize("pos1, theta1, omega1, m1, e1, \
                             pos2, theta2, omega2, m2, e2, \

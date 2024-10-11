@@ -5,6 +5,8 @@ from src.sheets_api import *
 from tests.helpers.fake_objects import *
 from tests.helpers.constants_for_testing import *
 
+import src.swinging as main
+
 # Test cases for the angle_update function
 @pytest.mark.parametrize("omega, theta, r_param, dt, g, expected_omega, expected_theta", [
     (0, 0, 0.2, 0.1, 9.81, 0.0, 0.0),             # base case
