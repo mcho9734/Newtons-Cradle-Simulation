@@ -4,9 +4,9 @@ Helper functions and implementation of a Newton's cradle simulation.
 """
 
 from vpython import *
-from .sheets_api import get_values, update_values, get_pendulum_info
-from .pendulum import make_bob, make_axle, make_cord, make_pendulum
-from .constants import *
+from src.sheets_api import get_values, update_values, get_pendulum_info
+from src.pendulum import make_bob, make_axle, make_cord, make_pendulum
+from src.constants import *
 
 # TODO 1: write the following 5 functions using relevant helper functions from
 # `sheets_api.`
