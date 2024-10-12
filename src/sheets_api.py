@@ -4,7 +4,10 @@ Functionality from Google Sheets API to get and update values in a spreadsheet.
 Also creates list of dictionaries representing the pendula in the Newton's cradle.
 """
 
-from .constants import *
+try:
+  from src.constants import *
+except ModuleNotFoundError:
+   from constants import *
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
