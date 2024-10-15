@@ -23,7 +23,7 @@ import newton_cradle_run as main
      vector(0.5, 1.3, 0.7), 0.3, 2.7, 0.5, \
         0.4, 0.17228346456692917, 0.03228346456692915, \
             0.15952755905511815, 0.07952755905511813),
-    # very close to condition
+    # very close to condition - make sure your inequality is <= radius_sum * 1.05
     (vector(1.04, 0, 0), 1.4, 10, 0.25, 0.9, \
      vector(0, 0, 0), 2.3, 2.7, 0.75, 0.1, \
         1.7635433070866144, 0.9535433070866143, \
@@ -46,8 +46,8 @@ def test_handle_two_bobs_collision(pos1, omega1, m1, rad1, e1, \
     r1 = 1
 
     main.handle_two_bobs(pend1, pend2, r1)
-    assert pend1["omega"] == pytest.approx(expected_omega1, rel=0.01)
-    assert pend2["omega"] == pytest.approx(expected_omega2, rel=0.01)
+    assert pend1["omega"] == pytest.approx(expected_omega1, rel=0.01), 'omega should change because collision should occur'
+    assert pend2["omega"] == pytest.approx(expected_omega2, rel=0.01), 'second omega should change because collision should occur'
 
     # resetting the dictionary
     pend1["omega"] = omega1
@@ -55,8 +55,8 @@ def test_handle_two_bobs_collision(pos1, omega1, m1, rad1, e1, \
 
     # here reverse is not necessarily symmetric because different e values
     main.handle_two_bobs(pend2, pend1, r1)
-    assert pend1["omega"] == pytest.approx(reverse_expected_omega1, rel=0.01)
-    assert pend2["omega"] == pytest.approx(reverse_expected_omega2, rel=0.01)
+    assert pend1["omega"] == pytest.approx(reverse_expected_omega1, rel=0.01), 'the order of pendula in the collision matters because of the restitution coefficient chosen: make sure it is m1, m2'
+    assert pend2["omega"] == pytest.approx(reverse_expected_omega2, rel=0.01), 'the order of pendula in the collision matters because of the restitution coefficient chosen: make sure it is m1, m2'
 
 
 @pytest.mark.parametrize("omega1, omega2, rad1, rad2, pos1, pos2", [
@@ -81,8 +81,8 @@ def test_handle_two_bobs_no_collision(omega1, omega2, rad1, rad2, pos1, pos2):
     r1 = 1
 
     main.handle_two_bobs(pend1, pend2, r1)
-    assert pend1["omega"] == pytest.approx(omega1, rel=0.01)
-    assert pend2["omega"] == pytest.approx(omega2, rel=0.01)
+    assert pend1["omega"] == pytest.approx(omega1, rel=0.01), 'omega should not change because no collision should occur'
+    assert pend2["omega"] == pytest.approx(omega2, rel=0.01), 'second omega should not change because no collision should occur'
 
     # here reverse should be symmetric since there is no collision
     main.handle_two_bobs(pend2, pend1, r1)
