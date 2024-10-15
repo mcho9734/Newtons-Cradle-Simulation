@@ -85,7 +85,7 @@ def test_make_newton_cradle_pendulum():
 
 
 def test_make_newton_cradle_attributes():
-    pend_list = main.make_newton_cradle(RANGE, SPREADSHEET_ID, R, THETA_INIT)
+    pend_list = main.make_newton_cradle(RANGE, SPREADSHEET_ID, 0.4, -20 * pi / 180)
 
     pend_data = get_pendulum_info(RANGE, SPREADSHEET_ID)
 
@@ -99,11 +99,11 @@ def test_make_newton_cradle_attributes():
         assert f":{texture}_texture.jpg" == bob.texture # checking if bob texture is implemented correctly
 
         axle_pos = pend_dict["pendulum"][0].pos
-        assert axle_pos.x == pytest.approx(R/4 * i - 0.1, rel=0.01)
-        assert axle_pos.y == pytest.approx(R/5, rel=0.01)
+        assert axle_pos.x == pytest.approx(0.1 * i - 0.1, rel=0.01)
+        assert axle_pos.y == pytest.approx(0.08, rel=0.01)
         assert axle_pos.z == pytest.approx(0.0, rel=0.01)
 
-        assert pend_dict["theta"] == (THETA_INIT if i == 0 else 0) # checking theta initialisation
+        assert pend_dict["theta"] == (-20 * pi / 180 if i == 0 else 0) # checking theta initialisation
         assert pend_dict["omega"] == 0 # checking omega initialisation
 
         assert pend_dict["masses"] == sheet_pend_dict["masses"]
