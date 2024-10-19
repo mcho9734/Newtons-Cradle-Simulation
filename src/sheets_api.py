@@ -5,79 +5,94 @@ Also creates list of dictionaries representing the pendula in the Newton's cradl
 """
 
 try:
-  from src.constants import *
+    from src.constants import *
 except ModuleNotFoundError:
-   from constants import *
+    from constants import *
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 from google.oauth2.service_account import Credentials
 
+import termcolor
+
 SERVICE_ACCOUNT_FILE = "./config.json"
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
-creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+try:
+    creds = Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+except Exception:
+    print(termcolor.colored(
+        "Please follow the instructions to get your config.json file here:", "red")
+    )
+    print(termcolor.colored(
+        "  https://cs1.caltech.codes/24fa/projects/04/service_account_instructions", color="blue")
+    )
+    exit(1)
 
 
-def get_values(spreadsheet_id, range_names):
+def get_values(spreadsheet_id: str, range_names: str):
     """
     Returns the values of a spreadsheet in a given range.
-    
+
     Args:
       spreadsheet_id (str): the specific id of the spreadsheet (from url)
       range_names (lst[str]): list of strings that have the ranges
-      
+
     Returns:
-		  (dict): with the values of the rows, sorted by columns
-	  
+                  (dict): with the values of the rows, sorted by columns
+
     Raises:
       HttpError: if there is an error in getting the information
     """
     try:
-      service = build('sheets', 'v4', credentials=creds)
+        service = build('sheets', 'v4', credentials=creds)
 
-      result = service.spreadsheets().values().batchGet(
-          spreadsheetId=spreadsheet_id, 
-          ranges=range_names
-      ).execute()
-      return result
-    except HttpError as error:
-      print(f"An error occurred: {error}")
-      return error
-  
+        result = service.spreadsheets().values().batchGet(
+            spreadsheetId=spreadsheet_id,
+            ranges=range_names
+        ).execute()
+        return result
+    except HttpError as e:
+        print(termcolor.colored(
+            "You do not have access to that spreadsheet OR the range is invalid.\nDid you make sure to share the spreadsheet to be available to 'Anyone without a link'?\nDid you change constants in constants.py:\n  - constants.py:14\n  - constants.py:16\nYou can control/cmd + click on the linkes to go to that line.", "red")
+        )
+        exit(1)
+
 
 def update_values(spreadsheet_id, range_name, values):
     """
-    Updates the values in the specified spreadsheet in a given range. 
+    Updates the values in the specified spreadsheet in a given range.
 
     Args:
       spreadsheet_id (str): the specific id of the spreadsheet (from url)
       range_names (lst): list of strings that have the ranges
       values (lst): list of values that will be added to the range in sheet
-        
+
     Returns:
-		  (dict): with the new values of the rows, sorted by columns
-	  
+                  (dict): with the new values of the rows, sorted by columns
+
     Raises:
       HttpError: if there is an error in getting the information
     """
     try:
-      service = build('sheets', 'v4', credentials=creds)
-      result = service.spreadsheets().values().batchUpdate(
-          spreadsheetId = spreadsheet_id,
-          body = {
-              "valueInputOption": 'USER_ENTERED',
-              "data": [{
-                'range': range_name,
-                'values': values,
-              }]
-          }
+        service = build('sheets', 'v4', credentials=creds)
+        result = service.spreadsheets().values().batchUpdate(
+            spreadsheetId=spreadsheet_id,
+            body={
+                "valueInputOption": 'USER_ENTERED',
+                "data": [{
+                    'range': range_name,
+                    'values': values,
+                }]
+            }
         ).execute()
-      return result
+        return result
     except HttpError as error:
-      print(f"An error occurred: {error}")
-      return error
+        print(f"An error occurred: {error}")
+        return error
+
 
 def get_pendulum_info(range, spreadsheet_id):
     """
@@ -85,34 +100,33 @@ def get_pendulum_info(range, spreadsheet_id):
     dictionaries for each pendulum. 
 
     Args:
-		  ranges (lst) - list of strings representing ranges per attribute
+                  ranges (lst) - list of strings representing ranges per attribute
       spreadsheet_id (str) - unique spreadsheet id of google sheet
-    
+
     Returns:
-		  (list[dict]) - list of dictionaries with attributes for each pendulum
+                  (list[dict]) - list of dictionaries with attributes for each pendulum
               e.g.: [{'masses':1, 'restitution_coeffs':0.1, 'colors':'green', 
                     'textures':'wood'},..., 
                     {'masses':2, 'restitution_coeffs':0.5, 
                     'colors':'blue', 'textures':'earth'}]
     """
     pend_info = []
-    
+
     data = get_values(spreadsheet_id, range)['valueRanges'][0]['values']
     headers = data[0]
     rows = data[1:]
 
     for row in rows:
-       pend_dict = {}
-       for j, col_header in enumerate(headers):
-          pend_dict[col_header] = row[j]
-       pend_info.append(pend_dict)
-    
+        pend_dict = {}
+        for j, col_header in enumerate(headers):
+            pend_dict[col_header] = row[j]
+        pend_info.append(pend_dict)
+
     return pend_info
-       
 
 
 if __name__ == "__main__":
-  # testing
+    # testing
     pend_list = get_pendulum_info(RANGE, SPREADSHEET_ID)
     print(pend_list)
 
@@ -121,4 +135,3 @@ if __name__ == "__main__":
     # update_values(SPREADSHEET_ID, mass_range, [['1.5'], ['2'], ['1'], ['1.5']])
     # pend_list_new = get_pendulum_info(RANGE, SPREADSHEET)
     # print(pend_list_new)
-       
