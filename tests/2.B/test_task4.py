@@ -5,7 +5,7 @@ from src.sheets_api import *
 from tests.helpers.fake_objects import *
 from tests.helpers.constants_for_testing import *
 
-import newton_cradle_run as main
+import visualize_cradle_run as main
 
 @pytest.mark.parametrize("e, omega, omega2, m1, m2, r_param, expected_omega, expected_omega2", [
     (0, 1, -1, 1, 1, 0.1, 0.0, 0.0),        # fully inelastic

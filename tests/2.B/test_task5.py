@@ -5,7 +5,7 @@ from src.sheets_api import *
 from tests.helpers.fake_objects import *
 from tests.helpers.constants_for_testing import *
 
-import newton_cradle_run as main
+import visualize_cradle_run as main
 
 @pytest.mark.parametrize("pos1, omega1, m1, rad1, e1, \
                          pos2, omega2, m2, rad2, e2, \
