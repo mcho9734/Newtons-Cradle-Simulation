@@ -11,7 +11,7 @@ finally:
 
 import pytest
 
-from src.constants import R, RANGE, SPREADSHEET_ID, THETA_INIT
+from src.constants import RANGE, SPREADSHEET_ID, R, THETA_INIT
 from support.sheets_api import get_values, update_values, get_pendulum_info
 from tests.helpers.constants_for_testing import VPYTHON_COLOR_MAP
 
