@@ -1,8 +1,5 @@
-from vpython import *
-import pytest, os, sys # type: ignore
-import importlib
-from src.constants import *
-from src.sheets_api import *
+from vpython import vector
+import pytest, os, sys  # type: ignore
 
 VPYTHON_COLOR_MAP = {
     'white': vector(1,1,1),

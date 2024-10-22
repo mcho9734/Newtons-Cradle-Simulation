@@ -1,11 +1,8 @@
-from vpython import *
 import pytest, os, sys # type: ignore
-from src.constants import *
-from src.sheets_api import *
-from tests.helpers.fake_objects import *
-from tests.helpers.constants_for_testing import *
+from vpython import vector, color, textures
 
 import visualize_cradle_run as main
+from tests.helpers.fake_objects import FakePend
 
 @pytest.mark.parametrize("pos1, theta1, omega1, m1, e1, \
                             pos2, theta2, omega2, m2, e2, \
@@ -14,35 +11,35 @@ import visualize_cradle_run as main
                             exp_omega1, exp_theta1, \
                             exp_omega2, exp_theta2, \
                             exp_omega3, exp_theta3",[
-    ((vector(1, 0, 0), 1, 0.5, 2, 1, \
-      vector(0, 0, 0), 2, 0.5, 3, 0, \
-        vector(1.05, 0, 0), 1, 0.5, 2.5, 1, \
-            1, 0.01, 9.81, \
-                0.41745169639034535, 1.0041745169639034, \
-                    0.41079792242840063, 2.004107979224284, \
-                        0.41745169639034535, 1.0041745169639034)),
-    (vector(1, 0, 0), 1, 1.5, 2, 1, \
-     vector(1.1, 0, 0), 2, 1.5, 3, 1, \
-        vector(1.05, 0, 0), 1, 1.5, 4.5, 1, \
-            0.5, 0.01, 10, \
-                1.3317058030384206, 1.0133170580303843, \
-                    1.3181405146348637, 2.013181405146349, \
-                        1.3317058030384206, 1.0133170580303843),
-    (vector(0.5, 0.3, 2.2), 0.5, 0.1, 2, 0, \
-     vector(0.7, 0.2, 2.5), 2.2, 0, 2, 0, \
-        vector(1, 0.1, 3.3), 3.1, 1, 2, 0, \
-            1.5, 0.001, 5, \
-                0.09840191487131933, 0.5000984019148713, \
-                    -0.002694988012731967, 2.1999973050119874, \
-                        0.999861397791889, 3.100999861397792)
+    ((vector(1, 0, 0), 1, 0.5, 2, 1,
+      vector(0, 0, 0), 2, 0.5, 3, 0,
+      vector(1.05, 0, 0), 1, 0.5, 2.5, 1,
+      1, 0.01, 9.81,
+      0.41745169639034535, 1.0041745169639034,
+      0.41079792242840063, 2.004107979224284,
+      0.41745169639034535, 1.0041745169639034)),
+    (vector(1, 0, 0), 1, 1.5, 2, 1,
+     vector(1.1, 0, 0), 2, 1.5, 3, 1,
+     vector(1.05, 0, 0), 1, 1.5, 4.5, 1,
+     0.5, 0.01, 10,
+     1.3317058030384206, 1.0133170580303843,
+     1.3181405146348637, 2.013181405146349,
+     1.3317058030384206, 1.0133170580303843),
+    (vector(0.5, 0.3, 2.2), 0.5, 0.1, 2, 0,
+     vector(0.7, 0.2, 2.5), 2.2, 0, 2, 0,
+     vector(1, 0.1, 3.3), 3.1, 1, 2, 0,
+     1.5, 0.001, 5,
+     0.09840191487131933, 0.5000984019148713,
+     -0.002694988012731967, 2.1999973050119874,
+     0.999861397791889, 3.100999861397792)
 ])
 
-def test_newton_cradle_tick(pos1, theta1, omega1, m1, e1, \
-                            pos2, theta2, omega2, m2, e2, \
-                            pos3, theta3, omega3, m3, e3, \
-                            r_param, dt, g, \
-                            exp_omega1, exp_theta1, \
-                            exp_omega2, exp_theta2, \
+def test_newton_cradle_tick(pos1, theta1, omega1, m1, e1,
+                            pos2, theta2, omega2, m2, e2,
+                            pos3, theta3, omega3, m3, e3,
+                            r_param, dt, g,
+                            exp_omega1, exp_theta1,
+                            exp_omega2, exp_theta2,
                             exp_omega3, exp_theta3):
     pend1 = {
             "pendulum": FakePend(pos1, r_param, theta1, color.white, textures.metal).pendulum,

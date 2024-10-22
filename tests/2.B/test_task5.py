@@ -1,33 +1,30 @@
-from vpython import *
 import pytest, os, sys # type: ignore
-from src.constants import *
-from src.sheets_api import *
-from tests.helpers.fake_objects import *
-from tests.helpers.constants_for_testing import *
+from vpython import vector, color, textures
 
 import visualize_cradle_run as main
+from tests.helpers.fake_objects import FakeBob
 
 @pytest.mark.parametrize("pos1, omega1, m1, rad1, e1, \
                          pos2, omega2, m2, rad2, e2, \
                          expected_omega1, expected_omega2, \
                          reverse_expected_omega1, reverse_expected_omega2", [
-    (vector(1,0,0), 1, 1, 0.5, 1, \
-     vector(0,0,0), 0.5, 2, 0.5, 0, \
-        0.3333333333333333, 0.8333333333333334, \
-        0.6666666666666666, 0.6666666666666666),
-    (vector(1.05,0,0), 1, 1, 0.5, 1, \
-     vector(0,0,0), 0.5, 2, 0.5, 0, \
-        0.3333333333333333, 0.8333333333333334, \
-        0.6666666666666666, 0.6666666666666666), 
-    (vector(2, 1, 0.3), 0.1, 10, 1.5, 0.7, \
-     vector(0.5, 1.3, 0.7), 0.3, 2.7, 0.5, \
-        0.4, 0.17228346456692917, 0.03228346456692915, \
-            0.15952755905511815, 0.07952755905511813),
+    (vector(1,0,0), 1, 1, 0.5, 1,
+     vector(0,0,0), 0.5, 2, 0.5, 0,
+     0.3333333333333333, 0.8333333333333334,
+     0.6666666666666666, 0.6666666666666666),
+    (vector(1.05,0,0), 1, 1, 0.5, 1,
+     vector(0,0,0), 0.5, 2, 0.5, 0,
+     0.3333333333333333, 0.8333333333333334,
+     0.6666666666666666, 0.6666666666666666),
+    (vector(2, 1, 0.3), 0.1, 10, 1.5, 0.7,
+     vector(0.5, 1.3, 0.7), 0.3, 2.7, 0.5,
+     0.4, 0.17228346456692917, 0.03228346456692915,
+     0.15952755905511815, 0.07952755905511813),
     # very close to condition - make sure your inequality is <= radius_sum * 1.05
-    (vector(1.04, 0, 0), 1.4, 10, 0.25, 0.9, \
-     vector(0, 0, 0), 2.3, 2.7, 0.75, 0.1, \
-        1.7635433070866144, 0.9535433070866143, \
-            1.6104724409448818, 1.5204724409448822)
+    (vector(1.04, 0, 0), 1.4, 10, 0.25, 0.9,
+     vector(0, 0, 0), 2.3, 2.7, 0.75, 0.1,
+     1.7635433070866144, 0.9535433070866143,
+     1.6104724409448818, 1.5204724409448822)
 ])
 def test_handle_two_bobs_collision(pos1, omega1, m1, rad1, e1, \
                          pos2, omega2, m2, rad2, e2, \

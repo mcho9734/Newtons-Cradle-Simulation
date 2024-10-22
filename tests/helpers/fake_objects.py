@@ -1,4 +1,4 @@
-from vpython import *
+from vpython import cos, sin, vector
 
 # To avoid having VPython visualisations when testing other functions,
 # we define these fake objects with the same attributes
@@ -29,5 +29,3 @@ class FakePend:
         self.cord = FakeCord(axle_pos, cord_axis)
 
         self.pendulum = (self.axle, self.bob, self.cord)
-
-

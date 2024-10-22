@@ -1,10 +1,4 @@
-from vpython import *
 import pytest, os, sys # type: ignore
-from src.constants import *
-from src.sheets_api import *
-from tests.helpers.fake_objects import *
-from tests.helpers.constants_for_testing import *
-
 import visualize_cradle_run as main
 
 @pytest.mark.parametrize("e, omega, omega2, m1, m2, r_param, expected_omega, expected_omega2", [

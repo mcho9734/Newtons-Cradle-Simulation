@@ -1,24 +1,19 @@
 
-
 import subprocess
 import sys
 
-
 try:
-    from vpython import *
+    from vpython import box, cylinder, pi, sphere
 except ImportError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", 'vpython'])
 finally:
-    from vpython import *
+    from vpython import box, cylinder, pi, sphere
 
 import pytest
-import os
-import sys  # type: ignore
 
+from src.constants import R, RANGE, SPREADSHEET_ID, THETA_INIT
 from src.sheets_api import get_values, update_values, get_pendulum_info
-from tests.helpers.fake_objects import *
-from tests.helpers.constants_for_testing import *
-from src.constants import *
+from tests.helpers.constants_for_testing import VPYTHON_COLOR_MAP
 
 import src.special_cradles as main
 
