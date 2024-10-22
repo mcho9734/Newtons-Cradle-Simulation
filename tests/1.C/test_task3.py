@@ -52,27 +52,43 @@ def test_full_swing_update(theta1, omega1, theta2, omega2, r_param, dt, g,
 
     main.full_swing_update(pend_list, r_param, dt, g)
 
-    assert pend1["omega"] == pytest.approx(expected_omega1, rel=0.01), 'omega should be updated correctly for given arguments, not hardcoded arguments'
-    assert pend1["theta"] == pytest.approx(expected_theta1, rel=0.01), 'theta should be updated correctly for given arguments, not hardcoded arguments'
-    assert pend2["omega"] == pytest.approx(expected_omega2, rel=0.01), 'omega should be updated correctly for given arguments, not hardcoded arguments'
-    assert pend2["theta"] == pytest.approx(expected_theta2, rel=0.01), 'theta should be updated correctly for given arguments, not hardcoded arguments'
+    assert pytest.approx(expected_omega1, rel=0.01) == pend1["omega"], (
+        'omega should be updated correctly for given arguments, not hardcoded arguments')
+    assert pytest.approx(expected_theta1, rel=0.01) == pend1["theta"], (
+        'theta should be updated correctly for given arguments, not hardcoded arguments')
+    assert pytest.approx(expected_omega2, rel=0.01) == pend2["omega"], (
+        'omega should be updated correctly for given arguments, not hardcoded arguments')
+    assert pytest.approx(expected_theta2, rel=0.01) == pend2["theta"], (
+        'theta should be updated correctly for given arguments, not hardcoded arguments')
     
     bob_pos1 = pend1["pendulum"][1].pos
-    assert bob_pos1.x == pytest.approx(expected_bob_pos1[0], rel=0.01), 'bob position should be updated correctly for given arguments, not hardcoded arguments'
-    assert bob_pos1.y == pytest.approx(expected_bob_pos1[1], rel=0.01)
-    assert bob_pos1.z == pytest.approx(expected_bob_pos1[2], rel=0.01)
-    
+    assert pytest.approx(expected_bob_pos1[0], rel=0.01) == bob_pos1.x, (
+        'bob position (x) should be updated correctly for given arguments, not hardcoded arguments')
+    assert pytest.approx(expected_bob_pos1[1], rel=0.01) == bob_pos1.y, (
+        'bob position (y) should be updated correctly for given arguments, not hardcoded arguments')
+    assert pytest.approx(expected_bob_pos1[2], rel=0.01) == bob_pos1.z, (
+        'bob position (z) should be updated correctly for given arguments, not hardcoded arguments')
+
     bob_pos2 = pend2["pendulum"][1].pos
-    assert bob_pos2.x == pytest.approx(expected_bob_pos2[0], rel=0.01), 'second bob position should be updated correctly for given arguments, not hardcoded arguments'
-    assert bob_pos2.y == pytest.approx(expected_bob_pos2[1], rel=0.01)
-    assert bob_pos2.z == pytest.approx(expected_bob_pos2[2], rel=0.01)
+    assert pytest.approx(expected_bob_pos2[0], rel=0.01) == bob_pos2.x, (
+        'second bob position (x) should be updated correctly for given arguments, not hardcoded arguments')
+    assert pytest.approx(expected_bob_pos2[1], rel=0.01) == bob_pos2.y, (
+        'second bob position (y) should be updated correctly for given arguments, not hardcoded arguments')
+    assert pytest.approx(expected_bob_pos2[2], rel=0.01) == bob_pos2.z, (
+        'second bob position (z) should be updated correctly for given arguments, not hardcoded arguments')
 
     axis_pos1 = pend1["pendulum"][2].axis
-    assert axis_pos1.x == pytest.approx(expected_axis_pos1[0], rel=0.01), 'cord axis should be updated correctly with given parameters'
-    assert axis_pos1.y == pytest.approx(expected_axis_pos1[1], rel=0.01)
-    assert axis_pos1.z == pytest.approx(expected_axis_pos1[2], rel=0.01)
+    assert pytest.approx(expected_axis_pos1[0], rel=0.01) == axis_pos1.x, (
+        'cord axis (x) should be updated correctly with given parameters')
+    assert pytest.approx(expected_axis_pos1[1], rel=0.01) == axis_pos1.y, (
+        'cord axis (y) should be updated correctly with given parameters')
+    assert pytest.approx(expected_axis_pos1[2], rel=0.01) == axis_pos1.z, (
+        'cord axis (z) should be updated correctly with given parameters')
     
     axis_pos2 = pend2["pendulum"][2].axis
-    assert axis_pos2.x == pytest.approx(expected_axis_pos2[0], rel=0.01), 'second cord axis should be updated correctly with given parameters'
-    assert axis_pos2.y == pytest.approx(expected_axis_pos2[1], rel=0.01)
-    assert axis_pos2.z == pytest.approx(expected_axis_pos2[2], rel=0.01)
+    assert  pytest.approx(expected_axis_pos2[0], rel=0.01) == axis_pos2.x, (
+        'second cord axis (x) should be updated correctly with given parameters')
+    assert pytest.approx(expected_axis_pos2[1], rel=0.01) == axis_pos2.y, (
+        'second cord axis (y) should be updated correctly with given parameters')
+    assert pytest.approx(expected_axis_pos2[2], rel=0.01) == axis_pos2.z, (
+        'second cord axis (z) should be updated correctly with given parameters')

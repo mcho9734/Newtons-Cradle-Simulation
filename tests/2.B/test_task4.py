@@ -11,5 +11,7 @@ import visualize_cradle_run as main
 def test_handle_collision(e, omega, omega2, m1, m2, r_param, expected_omega, expected_omega2):
     print(main.handle_collision(e, omega, omega2, m1, m2, r_param))
     omega_new, omega2_new = main.handle_collision(e, omega, omega2, m1, m2, r_param)
-    assert omega_new == pytest.approx(expected_omega, rel=0.001), 'omega should be updated correctly with given parameters'
-    assert omega2_new == pytest.approx(expected_omega2, rel=0.001), 'second omega should be updated correctly with given parameters'
+    assert pytest.approx(expected_omega, rel=0.001) == omega_new, (
+        'omega should be updated correctly with given parameters')
+    assert pytest.approx(expected_omega2, rel=0.001) == omega2_new, (
+        'second omega should be updated correctly with given parameters')

@@ -33,7 +33,7 @@ def test_uniform_mass_newton_cradle(mass):
         "valueRanges"][0]["values"]
 
     for new_mass in new_masses:
-        assert float(new_mass[0]) == mass, 'all masses must be the same'
+        assert mass == float(new_mass[0]), 'all masses must be the same'
 
     # resetting the spreadsheet to original values
     update_values(SPREADSHEET_ID, mass_range, actual_masses)
@@ -51,7 +51,7 @@ def test_uniform_e_newton_cradle(e):
     new_es = get_values(SPREADSHEET_ID, e_range)["valueRanges"][0]["values"]
 
     for new_e in new_es:
-        assert float(new_e[0]) == e
+        assert e == float(new_e[0])
 
     # resetting the spreadsheet to original values
     update_values(SPREADSHEET_ID, e_range, actual_es)
@@ -66,8 +66,8 @@ def test_elastic_newton_cradle():
     new_es = get_values(SPREADSHEET_ID, e_range)["valueRanges"][0]["values"]
 
     for new_e in new_es:
-        assert float(
-            new_e[0]) == 1, 'all restitution coefficients should be elastic'
+        assert 1 == float(new_e[0]), (
+            'all restitution coefficients should be elastic')
 
     # resetting the spreadsheet to original values
     update_values(SPREADSHEET_ID, e_range, actual_es)
@@ -82,8 +82,8 @@ def test_inelastic_newton_cradle():
     new_es = get_values(SPREADSHEET_ID, e_range)["valueRanges"][0]["values"]
 
     for new_e in new_es:
-        assert float(
-            new_e[0]) == 0, 'all restitution coefficients should be inelastic'
+        assert 0 == float(new_e[0]), (
+            'all restitution coefficients should be inelastic')
 
     # resetting the spreadsheet to original values
     update_values(SPREADSHEET_ID, e_range, actual_es)
@@ -114,17 +114,17 @@ def test_make_newton_cradle_attributes():
         assert f":{texture}_texture.jpg" == bob.texture, 'bob texture should be from the spreadsheet'
 
         axle_pos = pend_dict["pendulum"][0].pos
-        assert axle_pos.x == pytest.approx(
-            0.1 * i - 0.1, rel=0.01), 'axle position calculation should be correct'
-        assert axle_pos.y == pytest.approx(
-            0.08, rel=0.01), 'axle position calculation should be correct'
-        assert axle_pos.z == pytest.approx(
-            0.0, rel=0.01), 'axle position calculation should be correct'
+        assert pytest.approx(0.1 * i - 0.1, rel=0.01) == axle_pos.x, (
+            'axle position calculation should be correct')
+        assert pytest.approx(0.08, rel=0.01) == axle_pos.y, (
+            'axle position calculation should be correct')
+        assert pytest.approx(0.0, rel=0.01) == axle_pos.z, (
+            'axle position calculation should be correct')
 
-        assert pend_dict["theta"] == (-20 * pi / 180 if i ==
-                                      0 else 0), 'theta should be initialised to theta_init only for the first pendulum, and 0 for the others'
-        assert pend_dict["omega"] == 0, 'omega should be initialised to 0 for all pendula'
+        assert (-20 * pi / 180 if i == 0 else 0) == pend_dict["theta"], (
+            'theta should be initialised to theta_init only for the first pendulum, and 0 for the others')
+        assert 0 == pend_dict["omega"], 'omega should be initialised to 0 for all pendula'
 
-        assert pend_dict["masses"] == sheet_pend_dict["masses"], 'mass should be from the spreadsheet'
-        assert pend_dict["restitution_coeffs"] == sheet_pend_dict[
-            "restitution_coeffs"], 'restitution coefficient should be from the spreadsheet'
+        assert sheet_pend_dict["masses"] == pend_dict["masses"], 'mass should be from the spreadsheet'
+        assert sheet_pend_dict["restitution_coeffs"] == pend_dict["restitution_coeffs"], (
+             'restitution coefficient should be from the spreadsheet')

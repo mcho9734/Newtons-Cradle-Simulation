@@ -58,12 +58,16 @@ def test_newton_cradle_tick(pos1, theta1, omega1, m1, e1,
     pend_list = [pend1, pend2, pend3]
 
     main.newton_cradle_tick(pend_list, r_param, dt, g)
-    assert pend1["omega"] == pytest.approx(exp_omega1, rel=0.01), 'first omega should be correctly updated as per dt tick'
-    assert pend2["omega"] == pytest.approx(exp_omega2, rel=0.01), 'second omega should be correctly updated as per dt tick'
-    assert pend3["omega"] == pytest.approx(exp_omega3, rel=0.01), 'third omega should be correctly updated as per dt tick'
+    assert pytest.approx(exp_omega1, rel=0.01) == pend1["omega"], (
+        'first omega should be correctly updated as per dt tick')
+    assert pytest.approx(exp_omega2, rel=0.01) == pend2["omega"], (
+        'second omega should be correctly updated as per dt tick')
+    assert pytest.approx(exp_omega3, rel=0.01) == pend3["omega"], (
+        'third omega should be correctly updated as per dt tick')
 
-    assert pend1["theta"] == pytest.approx(exp_theta1, rel=0.01), 'first theta should be correctly updated as per dt tick'
-    assert pend2["theta"] == pytest.approx(exp_theta2, rel=0.01), 'second theta should be correctly updated as per dt tick'
-    assert pend3["theta"] == pytest.approx(exp_theta3, rel=0.01), 'third theta should be correctly updated as per dt tick'
-
-    
+    assert pytest.approx(exp_theta1, rel=0.01) == pend1["theta"], (
+        'first theta should be correctly updated as per dt tick')
+    assert pytest.approx(exp_theta2, rel=0.01) == pend2["theta"], (
+        'second theta should be correctly updated as per dt tick')
+    assert pytest.approx(exp_theta3, rel=0.01) == pend3["theta"], (
+        'third theta should be correctly updated as per dt tick')

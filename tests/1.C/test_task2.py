@@ -15,5 +15,7 @@ import src.swinging as main
 
 def test_angle_update(omega, theta, r_param, dt, g, expected_omega, expected_theta):
     omega_new, theta_new = main.angle_update(omega, theta, r_param, dt, g)
-    assert omega_new == pytest.approx(expected_omega, rel=0.001), 'omega should be calculated correctly for given arguments, not hardcoded arguments'
-    assert theta_new == pytest.approx(expected_theta, rel=0.001), 'theta should be calculated correctly for given arguments, not hardcoded arguments'
+    assert pytest.approx(expected_omega, rel=0.001) == omega_new, (
+        'omega should be calculated correctly for given arguments, not hardcoded arguments')
+    assert pytest.approx(expected_theta, rel=0.001) == theta_new, (
+        'theta should be calculated correctly for given arguments, not hardcoded arguments')
