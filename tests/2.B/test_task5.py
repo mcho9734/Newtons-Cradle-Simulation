@@ -26,9 +26,9 @@ from tests.helpers.fake_objects import FakeBob
      1.7635433070866144, 0.9535433070866143,
      1.6104724409448818, 1.5204724409448822)
 ])
-def test_handle_two_bobs_collision(pos1, omega1, m1, rad1, e1, \
-                         pos2, omega2, m2, rad2, e2, \
-                         expected_omega1, expected_omega2, \
+def test_handle_two_bobs_collision(pos1, omega1, m1, rad1, e1,
+                         pos2, omega2, m2, rad2, e2,
+                         expected_omega1, expected_omega2,
                          reverse_expected_omega1, reverse_expected_omega2):
     bob1 = FakeBob(pos1, rad1, color.white, textures.metal)
     pend1 = {
@@ -63,10 +63,10 @@ def test_handle_two_bobs_collision(pos1, omega1, m1, rad1, e1, \
 
 
 @pytest.mark.parametrize("omega1, omega2, rad1, rad2, pos1, pos2", [
-    (1, 0.5, 0.5, 0.5, vector(1, 0, 0), vector(-1, 0, 0)),    
-    (2, 2.7, 0.3, 1, vector(1, 1.06, 2), vector(2, 1, 1)),    
-    (3, 3.25, 5, 3, vector(1, 7, 5), vector(7, 0.5, 3)),   
-    (0.1, 0.2, 0.69, 1.2, vector(-3.6, -2.7, -0.5), vector(-3, -4, -2))  
+    (1, 0.5, 0.5, 0.5, vector(1, 0, 0), vector(-1, 0, 0)),
+    (2, 2.7, 0.3, 1, vector(1, 1.06, 2), vector(2, 1, 1)),
+    (3, 3.25, 5, 3, vector(1, 7, 5), vector(7, 0.5, 3)),
+    (0.1, 0.2, 0.69, 1.2, vector(-3.6, -2.7, -0.5), vector(-3, -4, -2))
 ])
 def test_handle_two_bobs_no_collision(omega1, omega2, rad1, rad2, pos1, pos2):
     bob1 = FakeBob(pos1, rad1, color.white, textures.metal)
@@ -74,7 +74,7 @@ def test_handle_two_bobs_no_collision(omega1, omega2, rad1, rad2, pos1, pos2):
         "pendulum": (1, bob1, 1),
         "theta": 0.5, "omega": omega1, "masses": 1, "restitution_coeffs": 1
     }
-    
+
     bob2 = FakeBob(pos2, rad2, color.white, textures.metal)
     pend2 = {
         "pendulum": (1, bob2, 1),
