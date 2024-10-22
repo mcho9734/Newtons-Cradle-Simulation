@@ -4,10 +4,7 @@ Functionality from Google Sheets API to get and update values in a spreadsheet.
 Also creates list of dictionaries representing the pendula in the Newton's cradle.
 """
 
-try:
-    from src.constants import *
-except ModuleNotFoundError:
-    from constants import *
+from src.constants import RANGE, SPREADSHEET_ID
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -133,5 +130,5 @@ if __name__ == "__main__":
     # # You can also update the values in your Google Sheet with code like this!
     # mass_range = "A2:A5"
     # update_values(SPREADSHEET_ID, mass_range, [['1.5'], ['2'], ['1'], ['1.5']])
-    # pend_list_new = get_pendulum_info(RANGE, SPREADSHEET)
+    # pend_list_new = get_pendulum_info(RANGE, SPREADSHEET_ID)
     # print(pend_list_new)
