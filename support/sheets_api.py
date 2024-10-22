@@ -91,14 +91,14 @@ def update_values(spreadsheet_id, range_name, values):
         return error
 
 
-def get_pendulum_info(range, spreadsheet_id):
+def get_pendulum_info(ranges, spreadsheet_id):
     """
     Returns a list with all the information from the Google Sheet stored in
     dictionaries for each pendulum. 
 
     Args:
-                  ranges (lst) - list of strings representing ranges per attribute
-      spreadsheet_id (str) - unique spreadsheet id of google sheet
+        ranges (lst) - list of strings representing ranges per attribute
+        spreadsheet_id (str) - unique spreadsheet id of google sheet
 
     Returns:
                   (list[dict]) - list of dictionaries with attributes for each pendulum
@@ -109,7 +109,7 @@ def get_pendulum_info(range, spreadsheet_id):
     """
     pend_info = []
 
-    data = get_values(spreadsheet_id, range)['valueRanges'][0]['values']
+    data = get_values(spreadsheet_id, ranges)['valueRanges'][0]['values']
     headers = data[0]
     rows = data[1:]
 
