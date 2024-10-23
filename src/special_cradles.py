@@ -3,6 +3,12 @@ CS1 24fa - Assignment 4
 Helper functions and implementation of a Newton's cradle simulation.
 """
 
+from vpython import vector  # type: ignore
+
+from src.constants import COLOR_MAP, TEXTURE_MAP
+
+from src.pendulum import make_pendulum
+from support.sheets_api import update_values, get_pendulum_info
 from support.types import PendulumEntry
 
 # TODO 1: write the following 5 functions using relevant helper functions from `sheets_api`.

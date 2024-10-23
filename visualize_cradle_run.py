@@ -3,19 +3,17 @@ CS1 24fa - Assignment 4
 Helper functions and implementation of a Newton's cradle simulation.
 """
 
-from support.types import Pendulum
+from vpython import mag, scene, rate
 
-from vpython import scene, rate
+
 from support.types import PendulumEntry
 
 from src.constants import (
     RANGE, SPREADSHEET_ID,
     DT, GRAV, R, THETA_INIT,
 )
-from support.sheets_api import get_values, update_values, get_pendulum_info
-from src.pendulum import make_bob, make_axle, make_cord, make_pendulum
-from src.special_cradles import uniform_mass_newton_cradle, uniform_e_newton_cradle, elastic_newton_cradle, inelastic_newton_cradle, make_newton_cradle
-from src.swinging import angle_update, swing_update, full_swing_update
+from src.special_cradles import make_newton_cradle
+from src.swinging import full_swing_update
 
 scene.title = "Newton's cradle"
 
