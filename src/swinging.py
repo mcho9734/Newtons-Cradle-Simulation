@@ -4,9 +4,9 @@ Helper functions and implementation of a Newton's cradle simulation.
 """
 
 from vpython import (  # type: ignore
-    cos,
-    sin,
-    vector,
+    cos,  # type: ignore
+    sin,  # type: ignore
+    vector,  # type: ignore
 )
 
 from support.types import PendulumEntry

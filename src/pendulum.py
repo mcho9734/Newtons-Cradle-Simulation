@@ -4,14 +4,14 @@ Helper functions to make a pendulum.
 """
 
 from vpython import (  # type: ignore
-    box,
-    color,
-    cos,
-    cylinder,
-    vector,
-    sin,
-    sphere,
-    textures,
+    box,  # type: ignore
+    color,  # type: ignore
+    cos,  # type: ignore
+    cylinder,  # type: ignore
+    vector,  # type: ignore
+    sin,  # type: ignore
+    sphere,  # type: ignore
+    textures,  # type: ignore
 )
 
 from support.types import Pendulum, VPythonColor, VPythonTexture
