@@ -4,14 +4,17 @@ Functionality from Google Sheets API to get and update values in a spreadsheet.
 Also creates list of dictionaries representing the pendula in the Newton's cradle.
 """
 
-from src.constants import RANGE, SPREADSHEET_ID
+from sys import exit
+from typing import Any
 
-from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-
+from googleapiclient.discovery import build
 from google.oauth2.service_account import Credentials
 
 import termcolor
+
+from src.constants import RANGE, SPREADSHEET_ID
+from support.types import PendAttrs
 
 SERVICE_ACCOUNT_FILE = "./config.json"
 
@@ -24,12 +27,12 @@ except Exception:
         "Please follow the instructions to get your config.json file here:", "red")
     )
     print(termcolor.colored(
-        "  https://cs1.caltech.codes/24fa/projects/04/service_account_instructions", color="blue")
-    )
+        "  https://cs1.caltech.codes/24fa/projects/04/service_account_instructions", color="blue"
+    ))
     exit(1)
 
 
-def get_values(spreadsheet_id: str, range_names: str):
+def get_values(spreadsheet_id: str, range_names: str | list[str]) -> dict[str, Any]:
     """
     Returns the values of a spreadsheet in a given range.
 
@@ -53,12 +56,21 @@ def get_values(spreadsheet_id: str, range_names: str):
         return result
     except HttpError as e:
         print(termcolor.colored(
-            "You do not have access to that spreadsheet OR the range is invalid.\nDid you make sure to share the spreadsheet to be available to 'Anyone without a link'?\nDid you change constants in constants.py:\n  - constants.py:14\n  - constants.py:16\nYou can control/cmd + click on the linkes to go to that line.", "red")
-        )
-        exit(1)
+            "You do not have access to that spreadsheet OR the range is invalid.\n"
+            "Did you make sure to share the spreadsheet to be available to 'Anyone with a link'?\n"
+            "Did you change constants in constants.py:\n"
+            "  - constants.py:14\n"
+            "  - constants.py:16\n"
+            "You can control/cmd + click on the links to go to that line.",
+            "red"
+        ))
+        raise
+        # exit(1)
 
 
-def update_values(spreadsheet_id, range_name, values):
+def update_values(spreadsheet_id: str,
+                  range_names: str | list[str],
+                  values: list[str]) -> dict[str, Any]:
     """
     Updates the values in the specified spreadsheet in a given range.
 
@@ -73,25 +85,21 @@ def update_values(spreadsheet_id, range_name, values):
     Raises:
       HttpError: if there is an error in getting the information
     """
-    try:
-        service = build('sheets', 'v4', credentials=creds)
-        result = service.spreadsheets().values().batchUpdate(
-            spreadsheetId=spreadsheet_id,
-            body={
-                "valueInputOption": 'USER_ENTERED',
-                "data": [{
-                    'range': range_name,
-                    'values': values,
-                }]
-            }
-        ).execute()
-        return result
-    except HttpError as error:
-        print(f"An error occurred: {error}")
-        return error
+    service = build('sheets', 'v4', credentials=creds)
+    result = service.spreadsheets().values().batchUpdate(
+        spreadsheetId=spreadsheet_id,
+        body={
+            "valueInputOption": 'USER_ENTERED',
+            "data": [{
+                'range': range_names,
+                'values': values,
+            }]
+        }
+    ).execute()
+    return result
 
 
-def get_pendulum_info(ranges, spreadsheet_id):
+def get_pendulum_info(ranges: str | list[str], spreadsheet_id: str) -> list[PendAttrs]:
     """
     Returns a list with all the information from the Google Sheet stored in
     dictionaries for each pendulum. 

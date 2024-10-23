@@ -3,14 +3,14 @@ CS1 24fa - Assignment 4
 Helper functions and implementation of a Newton's cradle simulation.
 """
 
-from vpython import *
-from support.sheets_api import get_values, update_values, get_pendulum_info
-from src.pendulum import make_bob, make_axle, make_cord, make_pendulum
-from src.constants import *
+from support.types import Pendulum
 
-# TODO 1: write the following 5 functions using relevant helper functions from
-# `sheets_api.`
-def uniform_mass_newton_cradle(spreadsheet_id, mass_range, mass, num_pends):
+# TODO 1: write the following 5 functions using relevant helper functions from `sheets_api`.
+def uniform_mass_newton_cradle(spreadsheet_id: str,
+                               mass_range: str,
+                               mass: float,
+                               num_pends: int,
+                               ) -> None:
     """
     Updates the spreadsheet such that all pendula have the same mass. 
 
@@ -20,16 +20,20 @@ def uniform_mass_newton_cradle(spreadsheet_id, mass_range, mass, num_pends):
         mass (float): mass to be uniformly applied to each pendulum
         num_pends (int): number of pendula in the Newton's cradle
     """
+    ...
     # TODO: create an empty list that will serve as the required nested list
     #  as described in the guide. Then, for each pendulum, append a list with
     # the required string mass value to the empty list
     # Then, use a helper function from `sheets_api.py` to update this nested
     # list of values to the specific spreadsheet defined by the 
     # `spreadsheet_id`
-    pass
 
 
-def uniform_e_newton_cradle(spreadsheet_id, e_range, e_val, num_pends):
+def uniform_e_newton_cradle(spreadsheet_id: str,
+                            e_range: str,
+                            e_val: float,
+                            num_pends: int,
+                            ) -> None:
     """
     Updates the spreadsheet such that all pendula have the same coefficient of
     restitution. 
@@ -42,12 +46,15 @@ def uniform_e_newton_cradle(spreadsheet_id, e_range, e_val, num_pends):
         pendulum
         num_pends (int): number of pendula in the Newton's cradle
     """
+    ...
     # TODO: similar to the previous function, but you will be updating
     # the coefficients of restitution with the relevant value instead
-    pass
 
 
-def elastic_newton_cradle(spreadsheet_id, e_range, num_pends):
+def elastic_newton_cradle(spreadsheet_id: str,
+                          e_range: str,
+                          num_pends: int,
+                          ) -> None:
     """
     Updates the spreadsheet such that all pendula have perfectly elastic
     collisions with each other. 
@@ -58,12 +65,15 @@ def elastic_newton_cradle(spreadsheet_id, e_range, num_pends):
         spreadsheet
         num_pends (int): number of pendula in the Newton's cradle
     """
+    ...
     # TODO: Use a helper function to update the spreadsheet with the elastic
     # coefficient of restitution value.
-    pass
 
 
-def inelastic_newton_cradle(spreadsheet_id, e_range, num_pends):
+def inelastic_newton_cradle(spreadsheet_id: str,
+                            e_range: str,
+                            num_pends: int,
+                            ) -> None:
     """
     Updates the spreadsheet such that all pendula have perfectly inelastic
     collisions with each other. 
@@ -74,12 +84,16 @@ def inelastic_newton_cradle(spreadsheet_id, e_range, num_pends):
         spreadsheet
         num_pends (int): number of pendula in the Newton's cradle
     """
+    ...
     # TODO: Use a helper function to update the spreadsheet with the inelastic
     # coefficient of restitution value.
-    pass
 
 
-def make_newton_cradle(ranges, spreadsheet_id, r_param, theta_init):
+def make_newton_cradle(ranges: str,
+                       spreadsheet_id: str,
+                       r_param: float,
+                       theta_init: float,
+                       ) -> list[Pendulum]:
     """
     Uses information from a specific Google Sheet to make a list of 
     dictionaries representing each pendula and their physical quantities.
@@ -94,6 +108,7 @@ def make_newton_cradle(ranges, spreadsheet_id, r_param, theta_init):
         (list[dict]): list of dictionaries, each dictionary representing a
                 pendulum, with keys as physical attributes
     """
+    ...
     # TODO: use a helper function from `sheets_api.py` to make a `pend_list`
 
     # TODO: write a `for` loop that goes through each pendulum dictionary
@@ -104,4 +119,3 @@ def make_newton_cradle(ranges, spreadsheet_id, r_param, theta_init):
 
         # initializes the value for the key 'theta' depending on the value of i
         # initializes the value for the key 'omega'
-    pass

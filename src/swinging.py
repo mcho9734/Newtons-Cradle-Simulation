@@ -3,11 +3,22 @@ CS1 24fa - Assignment 4
 Helper functions and implementation of a Newton's cradle simulation.
 """
 
-from vpython import *
+from vpython import (  # type: ignore
+    cos,
+    sin,
+    vector,
+)
+
+from support.types import Pendulum
 
 
 # TODO 2: update angular components of a pendulum with the derivation provided
-def angle_update(omega, theta, r_param, dt, g):
+def angle_update(omega: float,
+                 theta: float,
+                 r_param: float,
+                 dt: float,
+                 g: float,
+                 ) -> tuple[float, float]:
     """
     Updates the angle and angular velocity of a pendulum system. 
 
@@ -21,11 +32,15 @@ def angle_update(omega, theta, r_param, dt, g):
     Returns:
         (tuple[float, float]): time-updated omega, theta    
     """
-    pass
+    ...
 
 
 # Provided
-def swing_update(pend_dict, r_param, dt, g):
+def swing_update(pend_dict: Pendulum,
+                 r_param: float,
+                 dt: float,
+                 g: float,
+                 ) -> None:
     """
     Updates the angle & position of the pendulum components in a single swing.
 
@@ -49,7 +64,11 @@ def swing_update(pend_dict, r_param, dt, g):
 
 
 # TODO 3: update the swings for each pendulum in the list
-def full_swing_update(pend_list, r_param, dt, g):
+def full_swing_update(pend_list: Pendulum,
+                      r_param: float,
+                      dt: float,
+                      g: float,
+                      ) -> None:
     """
     Updates the omegas for all the pendula in the cradle, updating each
     pendulum dictionary. 
@@ -61,4 +80,4 @@ def full_swing_update(pend_list, r_param, dt, g):
         dt (float): time step of update
         g (float): gravitational acceleration
     """
-    pass
+    ...

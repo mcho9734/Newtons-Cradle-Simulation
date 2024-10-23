@@ -2,21 +2,23 @@
 CS1 24fa - Assignment 4
 Constants required for a Newton's cradle simulation.
 """
-from vpython import *
+from vpython import color, pi, textures, vector  # type: ignore
 
-GRAV = 9.81 # gravitational acceleration in m/s^2
-R = 0.2 # cord length in meters, functions as size parameter for whole system
-THETA_INIT = -30 * pi / 180 # initial angle of 1st pendulum in radians
+from support.types import VPythonColor, VPythonTexture
 
-DT = 0.005 # timestep (between 0.000005 [slo-mo] and 0.01 [normal])
+GRAV: float = 9.81  # gravitational acceleration in m/s^2
+R: float = 0.2  # cord length in meters, functions as size parameter for whole system
+THETA_INIT: float = -30 * pi / 180  # initial angle of 1st pendulum in radians
+
+DT: float = 0.005  # timestep (between 0.000005 [slo-mo] and 0.01 [normal])
 
 # TODO 0.1: Choose the relevant range of cells in the spreadsheet
-RANGE = ""
+RANGE: str = ""
 # TODO 0.2: Enter the relevant spreadsheet ID 
-SPREADSHEET_ID = ""
+SPREADSHEET_ID: str = ""
 
 # Define color and texture dictionaries that map strings -> VPython attributes
-COLOR_MAP = {
+COLOR_MAP: dict[str, VPythonColor] = {
     "red": color.red,
     "green": color.green,
     "blue": color.blue,
@@ -26,10 +28,10 @@ COLOR_MAP = {
     "magenta": color.magenta,
     "white": color.white,
     "black": color.black,
-    "gray": color.gray(0.5) 
+    "gray": color.gray(0.5),  # type: ignore
 }
 
-TEXTURE_MAP = {
+TEXTURE_MAP: dict[str, VPythonTexture] = {
     "earth": textures.earth,
     "flower": textures.flower,
     "granite": textures.granite,
@@ -41,5 +43,5 @@ TEXTURE_MAP = {
     "stones": textures.stones,
     "stucco": textures.stucco,
     "wood": textures.wood,
-    "wood_old": textures.wood_old
+    "wood_old": textures.wood_old,
 }
