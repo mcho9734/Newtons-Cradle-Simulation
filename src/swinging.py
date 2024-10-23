@@ -9,7 +9,7 @@ from vpython import (  # type: ignore
     vector,
 )
 
-from support.types import Pendulum
+from support.types import PendulumEntry
 
 
 # TODO 2: update angular components of a pendulum with the derivation provided
@@ -36,7 +36,7 @@ def angle_update(omega: float,
 
 
 # Provided
-def swing_update(pend_dict: Pendulum,
+def swing_update(pend_dict: PendulumEntry,
                  r_param: float,
                  dt: float,
                  g: float,
@@ -64,7 +64,7 @@ def swing_update(pend_dict: Pendulum,
 
 
 # TODO 3: update the swings for each pendulum in the list
-def full_swing_update(pend_list: Pendulum,
+def full_swing_update(pend_list: list[PendulumEntry],
                       r_param: float,
                       dt: float,
                       g: float,

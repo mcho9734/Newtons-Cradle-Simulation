@@ -1,11 +1,12 @@
 
-from vpython import vector
+from vpython import box, cylinder, sphere, vector
 
 from typing import Any, TypedDict
 
 
 VPythonColor = vector
 VPythonTexture = str
+Pendulum = tuple[box, sphere, cylinder]
 
 
 class PendAttrs(TypedDict):
@@ -15,9 +16,9 @@ class PendAttrs(TypedDict):
     textures: str
 
 
-class Pendulum(TypedDict):
+class PendulumEntry(TypedDict):
+    pendulum: Pendulum
     theta: float
     omega: float
-    masses: float
-    restitution_coeffs: float
-    pendulum: tuple[Any, Any, Any]  # TODO
+    masses: str
+    restitution_coeffs: str

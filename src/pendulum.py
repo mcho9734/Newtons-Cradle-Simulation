@@ -14,7 +14,7 @@ from vpython import (  # type: ignore
     textures,
 )
 
-from support.types import VPythonColor, VPythonTexture
+from support.types import Pendulum, VPythonColor, VPythonTexture
 
 
 def make_bob(bob_pos: vector,
@@ -82,7 +82,7 @@ def make_pendulum(axle_pos: vector,
                   theta: float,
                   bob_color: VPythonColor = color.white,
                   bob_texture: VPythonTexture = textures.metal,
-                  ) -> tuple[box, sphere, cylinder]:
+                  ) -> Pendulum:
     """
     Builds a pendulum with a bob, axle and cord. 
     

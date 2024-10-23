@@ -6,6 +6,8 @@ Helper functions and implementation of a Newton's cradle simulation.
 from support.types import Pendulum
 
 from vpython import scene, rate
+from support.types import PendulumEntry
+
 from src.constants import (
     RANGE, SPREADSHEET_ID,
     DT, GRAV, R, THETA_INIT,
@@ -44,14 +46,14 @@ def handle_collision(e: float,
 
 
 # TODO 5: handle pairwise pendulum motion and collisions
-def handle_two_bobs(pend1: Pendulum, pend2: Pendulum, r_param: float) -> None:
+def handle_two_bobs(pend1: PendulumEntry, pend2: PendulumEntry, r_param: float) -> None:
     """
     Handles the collisions and updates of 2 pendula in the cradle.
 
     Args:
-        pend1 (Pendulum): dictionary representing 1st pendulum,
+        pend1 (PendulumEntry): dictionary representing 1st pendulum,
                         with keys as physical attributes
-        pend2 (Pendulum): dictionary representing 1st pendulum,
+        pend2 (PendulumEntry): dictionary representing 1st pendulum,
                         with keys as physical attributes
         r_param (float): size parameter used to define pendulum components
     """
@@ -59,7 +61,7 @@ def handle_two_bobs(pend1: Pendulum, pend2: Pendulum, r_param: float) -> None:
 
 
 # TODO 6: perform one step of the newton cradle
-def newton_cradle_tick(pend_list: list[Pendulum],
+def newton_cradle_tick(pend_list: list[PendulumEntry],
                        r_param: float,
                        dt: float,
                        g: float,

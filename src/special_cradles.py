@@ -3,7 +3,7 @@ CS1 24fa - Assignment 4
 Helper functions and implementation of a Newton's cradle simulation.
 """
 
-from support.types import Pendulum
+from support.types import PendulumEntry
 
 # TODO 1: write the following 5 functions using relevant helper functions from `sheets_api`.
 def uniform_mass_newton_cradle(spreadsheet_id: str,
@@ -93,7 +93,7 @@ def make_newton_cradle(ranges: str,
                        spreadsheet_id: str,
                        r_param: float,
                        theta_init: float,
-                       ) -> list[Pendulum]:
+                       ) -> list[PendulumEntry]:
     """
     Uses information from a specific Google Sheet to make a list of 
     dictionaries representing each pendula and their physical quantities.
