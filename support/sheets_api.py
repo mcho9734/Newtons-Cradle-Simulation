@@ -70,7 +70,7 @@ def get_values(spreadsheet_id: str, range_names: str | list[str]) -> dict[str, A
 
 def update_values(spreadsheet_id: str,
                   range_names: str | list[str],
-                  values: list[str]) -> dict[str, Any]:
+                  values: list[list[Any]]) -> dict[str, Any]:
     """
     Updates the values in the specified spreadsheet in a given range.
 
