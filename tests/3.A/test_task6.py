@@ -1,4 +1,4 @@
-import pytest, os, sys # type: ignore
+import pytest
 from vpython import vector, color, textures
 
 import visualize_cradle_run as main
@@ -10,7 +10,7 @@ from tests.helpers.fake_objects import FakePend
                             r_param, dt, g, \
                             exp_omega1, exp_theta1, \
                             exp_omega2, exp_theta2, \
-                            exp_omega3, exp_theta3",[
+                            exp_omega3, exp_theta3", [
     ((vector(1, 0, 0), 1, 0.5, 2, 1,
       vector(0, 0, 0), 2, 0.5, 3, 0,
       vector(1.05, 0, 0), 1, 0.5, 2.5, 1,

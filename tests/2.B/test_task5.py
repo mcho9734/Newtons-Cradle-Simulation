@@ -1,4 +1,4 @@
-import pytest, os, sys # type: ignore
+import pytest
 from vpython import vector, color, textures
 
 import visualize_cradle_run as main

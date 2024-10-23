@@ -1,5 +1,5 @@
 from vpython import vector, color, textures
-import pytest, os, sys # type: ignore
+import pytest
 
 from tests.helpers.fake_objects import FakePend
 import src.swinging as main

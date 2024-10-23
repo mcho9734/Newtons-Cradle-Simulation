@@ -1,4 +1,4 @@
-import pytest, os, sys # type: ignore
+import pytest
 import visualize_cradle_run as main
 
 @pytest.mark.parametrize("e, omega, omega2, m1, m2, r_param, expected_omega, expected_omega2", [

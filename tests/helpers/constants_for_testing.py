@@ -1,5 +1,4 @@
 from vpython import vector
-import pytest, os, sys  # type: ignore
 
 VPYTHON_COLOR_MAP = {
     'white': vector(1,1,1),

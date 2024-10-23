@@ -1,4 +1,4 @@
-import pytest, os, sys # type: ignore
+import pytest
 
 import src.swinging as main
 
