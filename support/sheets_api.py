@@ -4,17 +4,21 @@ Functionality from Google Sheets API to get and update values in a spreadsheet.
 Also creates list of dictionaries representing the pendula in the Newton's cradle.
 """
 
-from sys import exit
-from typing import Any
+import sys
+import os
+sys.path.insert(0, os.getcwd())
 
-from googleapiclient.errors import HttpError
-from googleapiclient.discovery import build
-from google.oauth2.service_account import Credentials
-
-import termcolor
-
-from src.constants import RANGE, SPREADSHEET_ID
 from support.types import PendAttrs
+from src.constants import RANGE, SPREADSHEET_ID
+import termcolor
+from google.oauth2.service_account import Credentials
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from typing import Any
+from sys import exit
+
+
+####
 
 SERVICE_ACCOUNT_FILE = "./config.json"
 
@@ -22,14 +26,14 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 try:
     creds = Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-except Exception:
+except Exception as e:
     print(termcolor.colored(
         "Please follow the instructions to get your config.json file here:", "red")
     )
     print(termcolor.colored(
         "  https://cs1.caltech.codes/24fa/projects/04/service_account_instructions", color="blue"
     ))
-    exit(1)
+    raise e
 
 
 def get_values(spreadsheet_id: str, range_names: str | list[str]) -> dict[str, Any]:
@@ -64,8 +68,7 @@ def get_values(spreadsheet_id: str, range_names: str | list[str]) -> dict[str, A
             "You can control/cmd + click on the links to go to that line.",
             "red"
         ))
-        raise
-        # exit(1)
+        raise e
 
 
 def update_values(spreadsheet_id: str,
