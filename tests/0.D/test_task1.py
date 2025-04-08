@@ -1,6 +1,7 @@
 
 import subprocess
 import sys
+import pandas as pd
 
 try:
     from vpython import box, cylinder, pi, sphere
@@ -11,109 +12,82 @@ finally:
 
 import pytest
 
-from src.constants import RANGE, SPREADSHEET_ID, R, THETA_INIT
-from support.sheets_api import get_values, update_values, get_pendulum_info
+from support.constants import DF1_FP, DF2_FP, DF3_FP, NC_FP, R, THETA_INIT
 from tests.helpers.constants_for_testing import VPYTHON_COLOR_MAP
+
+from src.pds_helper import extract_and_convert
 
 import src.special_cradles as main
 
+@pytest.mark.parametrize(
+    "filepath", 
+    [DF1_FP, DF2_FP, DF3_FP, NC_FP]
+    )
+def test_extract_and_convert(filepath):
+    pend_list = pd.DataFrame.from_dict(extract_and_convert(filepath))
+    correct_pend_list = pd.DataFrame.from_dict(pd.read_csv(filepath).to_dict(orient="index"), orient="index")
+    assert correct_pend_list.size == pend_list.size, 'Size of lists are not the same'
+    assert pd.DataFrame.equals(pend_list, correct_pend_list), 'Values in list are not equal'
 
-@pytest.mark.parametrize("mass", [
-    (5), (2), (1)
-])
+@pytest.mark.parametrize(
+    "mass", 
+    [(5), (2), (1)]
+    )
 def test_uniform_mass_newton_cradle(mass):
-    mass_range = "A2:A9"
-    actual_masses = get_values(SPREADSHEET_ID, mass_range)[
-        "valueRanges"][0]["values"]
-    num_pends = len(actual_masses)
-
-    main.uniform_mass_newton_cradle(
-        SPREADSHEET_ID, mass_range, mass, num_pends)
-    new_masses = get_values(SPREADSHEET_ID, mass_range)[
-        "valueRanges"][0]["values"]
-
-    for new_mass in new_masses:
-        assert mass == float(new_mass[0]), 'all masses must be the same'
-
-    # resetting the spreadsheet to original values
-    update_values(SPREADSHEET_ID, mass_range, actual_masses)
+    pend_list = main.uniform_mass_newton_cradle(DF1_FP, mass)
+    for pend in pend_list:
+        assert mass == float(pend["mass"]), 'all masses must be the same'
 
 
-@pytest.mark.parametrize("e", [
-    (0.3), (0.5), (0.8)
-])
+@pytest.mark.parametrize(
+    "e", 
+    [(0.3), (0.5), (0.8)]
+    )
 def test_uniform_e_newton_cradle(e):
-    e_range = "B2:B9"
-    actual_es = get_values(SPREADSHEET_ID, e_range)["valueRanges"][0]["values"]
-    num_pends = len(actual_es)
-
-    main.uniform_e_newton_cradle(SPREADSHEET_ID, e_range, e, num_pends)
-    new_es = get_values(SPREADSHEET_ID, e_range)["valueRanges"][0]["values"]
-
-    for new_e in new_es:
-        assert e == float(new_e[0])
-
-    # resetting the spreadsheet to original values
-    update_values(SPREADSHEET_ID, e_range, actual_es)
+    pend_list = main.uniform_e_newton_cradle(DF1_FP, e)
+    for pend in pend_list:
+        assert e == float(pend["restitution_coeff"]), 'all restitution coefficients must be the same'
 
 
 def test_elastic_newton_cradle():
-    e_range = "B2:B9"
-    actual_es = get_values(SPREADSHEET_ID, e_range)["valueRanges"][0]["values"]
-    num_pends = len(actual_es)
-
-    main.elastic_newton_cradle(SPREADSHEET_ID, e_range, num_pends)
-    new_es = get_values(SPREADSHEET_ID, e_range)["valueRanges"][0]["values"]
-
-    for new_e in new_es:
-        assert 1 == float(new_e[0]), (
+    pend_list = main.elastic_newton_cradle(DF1_FP)
+    for pend in pend_list:
+        assert 1 == float(pend["restitution_coeff"]), (
             'all restitution coefficients should be elastic')
-
-    # resetting the spreadsheet to original values
-    update_values(SPREADSHEET_ID, e_range, actual_es)
-
+        
 
 def test_inelastic_newton_cradle():
-    e_range = "B2:B9"
-    actual_es = get_values(SPREADSHEET_ID, e_range)["valueRanges"][0]["values"]
-    num_pends = len(actual_es)
-
-    main.inelastic_newton_cradle(SPREADSHEET_ID, e_range, num_pends)
-    new_es = get_values(SPREADSHEET_ID, e_range)["valueRanges"][0]["values"]
-
-    for new_e in new_es:
-        assert 0 == float(new_e[0]), (
+    pend_list = main.inelastic_newton_cradle(DF1_FP)
+    for pend in pend_list:
+        assert 0 == float(pend["restitution_coeff"]), (
             'all restitution coefficients should be inelastic')
-
-    # resetting the spreadsheet to original values
-    update_values(SPREADSHEET_ID, e_range, actual_es)
 
 
 def test_make_newton_cradle_pendulum():
-    pend_list = main.make_newton_cradle(RANGE, SPREADSHEET_ID, R, THETA_INIT)
-    pendulum = pend_list[0]["pendulum"]
-    assert isinstance(pendulum[0], box), 'axle should be a box'
-    assert isinstance(pendulum[1], sphere), 'bob should be a sphere'
-    assert isinstance(pendulum[2], cylinder), 'cord should be a string'
+    pend_list = main.make_newton_cradle(NC_FP, R, THETA_INIT)
+    for pend in pend_list:
+        pendulum = pend["objects"]
+        assert isinstance(pendulum[0], box), 'axle should be a box'
+        assert isinstance(pendulum[1], sphere), 'bob should be a sphere'
+        assert isinstance(pendulum[2], cylinder), 'cord should be a string'
 
 
 def test_make_newton_cradle_attributes():
-    pend_list = main.make_newton_cradle(
-        RANGE, SPREADSHEET_ID, 0.4, -20 * pi / 180)
+    pend_data = main.make_newton_cradle(NC_FP, 0.4, -20 * pi / 180)
+    pend_correct = extract_and_convert(NC_FP)
 
-    pend_data = get_pendulum_info(RANGE, SPREADSHEET_ID)
-
-    for i in range(len(pend_list)):
-        pend_dict = pend_list[i]
+    for i in range(len(pend_correct)):
+        pend_dict = pend_data[i]
         sheet_pend_dict = pend_data[i]
 
-        bob = pend_dict["pendulum"][1]
-        assert VPYTHON_COLOR_MAP[sheet_pend_dict["colors"]
-                                 ] == bob.color, 'bob color should be from the spreadsheet'
-        texture = sheet_pend_dict["textures"]
-        assert f":{texture}_texture.jpg" == bob.texture, 'bob texture should be from the spreadsheet'
+        bob = pend_dict["objects"][1]
+        assert VPYTHON_COLOR_MAP[sheet_pend_dict["color"]
+                                 ] == bob.color, 'bob color should not be modified'
+        
+        texture = sheet_pend_dict["texture"]
+        assert f":{texture}_texture.jpg" == bob.texture, 'bob texture should not be modified'
 
-        axle_pos = pend_dict["pendulum"][0].pos
+        axle_pos = pend_dict["objects"][0].pos
         assert pytest.approx(0.1 * i - 0.1, rel=0.01) == axle_pos.x, (
             'axle position calculation should be correct')
         assert pytest.approx(0.08, rel=0.01) == axle_pos.y, (
@@ -125,6 +99,6 @@ def test_make_newton_cradle_attributes():
             'theta should be initialised to theta_init only for the first pendulum, and 0 for the others')
         assert 0 == pend_dict["omega"], 'omega should be initialised to 0 for all pendula'
 
-        assert sheet_pend_dict["masses"] == pend_dict["masses"], 'mass should be from the spreadsheet'
-        assert sheet_pend_dict["restitution_coeffs"] == pend_dict["restitution_coeffs"], (
-             'restitution coefficient should be from the spreadsheet')
+        assert sheet_pend_dict["mass"] == pend_dict["mass"], 'mass should not be modified'
+        assert sheet_pend_dict["restitution_coeff"] == pend_dict["restitution_coeff"], (
+             'restitution coefficient should not be modified')

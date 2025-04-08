@@ -42,16 +42,16 @@ def test_full_swing_update(theta1, omega1, theta2, omega2, r_param, dt, g,
                            expected_omega1, expected_theta1, expected_omega2,
                            expected_theta2, expected_bob_pos1, expected_bob_pos2,
                            expected_axis_pos1, expected_axis_pos2):
-    pend1 = {"pendulum": FakePend(vector(0, 1, 0), 1, theta1, color.white, textures.metal).pendulum,
+    pend1 = {"objects": FakePend(vector(0, 1, 0), 1, theta1, color.white, textures.metal).pendulum,
              "theta": theta1, "omega": omega1}
     
-    pend2 = {"pendulum": FakePend(vector(0, 2, 0), 1, theta2, color.cyan, textures.earth).pendulum,
+    pend2 = {"objects": FakePend(vector(0, 2, 0), 1, theta2, color.cyan, textures.earth).pendulum,
              "theta": theta2, "omega": omega2}
     
     pend_list = [pend1, pend2]
 
     main.full_swing_update(pend_list, r_param, dt, g)
-
+    
     assert pytest.approx(expected_omega1, rel=0.01) == pend1["omega"], (
         'omega should be updated correctly for given arguments, not hardcoded arguments')
     assert pytest.approx(expected_theta1, rel=0.01) == pend1["theta"], (
@@ -61,7 +61,7 @@ def test_full_swing_update(theta1, omega1, theta2, omega2, r_param, dt, g,
     assert pytest.approx(expected_theta2, rel=0.01) == pend2["theta"], (
         'theta should be updated correctly for given arguments, not hardcoded arguments')
     
-    bob_pos1 = pend1["pendulum"][1].pos
+    bob_pos1 = pend1["objects"][1].pos
     assert pytest.approx(expected_bob_pos1[0], rel=0.01) == bob_pos1.x, (
         'bob position (x) should be updated correctly for given arguments, not hardcoded arguments')
     assert pytest.approx(expected_bob_pos1[1], rel=0.01) == bob_pos1.y, (
@@ -69,7 +69,7 @@ def test_full_swing_update(theta1, omega1, theta2, omega2, r_param, dt, g,
     assert pytest.approx(expected_bob_pos1[2], rel=0.01) == bob_pos1.z, (
         'bob position (z) should be updated correctly for given arguments, not hardcoded arguments')
 
-    bob_pos2 = pend2["pendulum"][1].pos
+    bob_pos2 = pend2["objects"][1].pos
     assert pytest.approx(expected_bob_pos2[0], rel=0.01) == bob_pos2.x, (
         'second bob position (x) should be updated correctly for given arguments, not hardcoded arguments')
     assert pytest.approx(expected_bob_pos2[1], rel=0.01) == bob_pos2.y, (
@@ -77,7 +77,7 @@ def test_full_swing_update(theta1, omega1, theta2, omega2, r_param, dt, g,
     assert pytest.approx(expected_bob_pos2[2], rel=0.01) == bob_pos2.z, (
         'second bob position (z) should be updated correctly for given arguments, not hardcoded arguments')
 
-    axis_pos1 = pend1["pendulum"][2].axis
+    axis_pos1 = pend1["objects"][2].axis
     assert pytest.approx(expected_axis_pos1[0], rel=0.01) == axis_pos1.x, (
         'cord axis (x) should be updated correctly with given parameters')
     assert pytest.approx(expected_axis_pos1[1], rel=0.01) == axis_pos1.y, (
@@ -85,7 +85,7 @@ def test_full_swing_update(theta1, omega1, theta2, omega2, r_param, dt, g,
     assert pytest.approx(expected_axis_pos1[2], rel=0.01) == axis_pos1.z, (
         'cord axis (z) should be updated correctly with given parameters')
     
-    axis_pos2 = pend2["pendulum"][2].axis
+    axis_pos2 = pend2["objects"][2].axis
     assert  pytest.approx(expected_axis_pos2[0], rel=0.01) == axis_pos2.x, (
         'second cord axis (x) should be updated correctly with given parameters')
     assert pytest.approx(expected_axis_pos2[1], rel=0.01) == axis_pos2.y, (

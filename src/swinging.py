@@ -1,24 +1,10 @@
 """
-CS1 24fa - Assignment 4
 Helper functions and implementation of a Newton's cradle simulation.
 """
 
-from vpython import (  # type: ignore
-    cos,  # type: ignore
-    sin,  # type: ignore
-    vector,  # type: ignore
-)
+from vpython import sin, cos, vector
 
-from support.types import PendulumEntry
-
-
-# TODO 2: update angular components of a pendulum with the derivation provided
-def angle_update(omega: float,
-                 theta: float,
-                 r_param: float,
-                 dt: float,
-                 g: float,
-                 ) -> tuple[float, float]:
+def angle_update(omega: float, theta: float, r_param: float, dt: float, g: float):
     """
     Updates the angle and angular velocity of a pendulum system. 
 
@@ -32,15 +18,12 @@ def angle_update(omega: float,
     Returns:
         (tuple[float, float]): time-updated omega, theta    
     """
+    # TODO 2: Update angular components of a pendulum with the derivation provided
     ...
 
 
 # Provided
-def swing_update(pend_dict: PendulumEntry,
-                 r_param: float,
-                 dt: float,
-                 g: float,
-                 ) -> None:
+def swing_update(pend, r_param: float, dt: float, g: float):
     """
     Updates the angle & position of the pendulum components in a single swing.
 
@@ -50,25 +33,20 @@ def swing_update(pend_dict: PendulumEntry,
         dt (float): time step of update
         g (float): gravitational acceleration
     """
-    theta = pend_dict["theta"]
-    omega = pend_dict["omega"]
+    theta = pend["theta"]
+    omega = pend["omega"]
 
-    axle, bob, cord = pend_dict["pendulum"]
+    axle, bob, cord = pend["objects"]
 
     omega_new, theta_new = angle_update(omega, theta, r_param, dt, g)
     bob.pos = axle.pos + r_param * vector(sin(theta_new), -cos(theta_new), 0)
     cord.axis = bob.pos - axle.pos
 
-    pend_dict["theta"] = theta_new
-    pend_dict["omega"] = omega_new
+    pend["theta"] = theta_new
+    pend["omega"] = omega_new
 
 
-# TODO 3: update the swings for each pendulum in the list
-def full_swing_update(pend_list: list[PendulumEntry],
-                      r_param: float,
-                      dt: float,
-                      g: float,
-                      ) -> None:
+def full_swing_update(pend_list, r_param: float, dt: float, g: float):
     """
     Updates the omegas for all the pendula in the cradle, updating each
     pendulum dictionary. 
@@ -80,4 +58,5 @@ def full_swing_update(pend_list: list[PendulumEntry],
         dt (float): time step of update
         g (float): gravitational acceleration
     """
+    # TODO 3: Update the swings for each pendulum in the list
     ...

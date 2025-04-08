@@ -42,17 +42,17 @@ def test_newton_cradle_tick(pos1, theta1, omega1, m1, e1,
                             exp_omega2, exp_theta2,
                             exp_omega3, exp_theta3):
     pend1 = {
-            "pendulum": FakePend(pos1, r_param, theta1, color.white, textures.metal).pendulum,
-            "theta": theta1, "omega": omega1, "masses": m1, "restitution_coeffs": e1}
+            "objects": FakePend(pos1, r_param, theta1, color.white, textures.metal).pendulum,
+            "theta": theta1, "omega": omega1, "mass": m1, "restitution_coeff": e1}
     
     pend2 = {
-            "pendulum": FakePend(pos2, r_param, theta1, color.white, textures.metal).pendulum,
-            "theta": theta2, "omega": omega2, "masses": m2, "restitution_coeffs": e2
+            "objects": FakePend(pos2, r_param, theta1, color.white, textures.metal).pendulum,
+            "theta": theta2, "omega": omega2, "mass": m2, "restitution_coeff": e2
         }
     
     pend3 = {
-            "pendulum": FakePend(pos3, r_param, theta1, color.white, textures.metal).pendulum,
-            "theta": theta3, "omega": omega3, "masses": m3, "restitution_coeffs": e3
+            "objects": FakePend(pos3, r_param, theta1, color.white, textures.metal).pendulum,
+            "theta": theta3, "omega": omega3, "mass": m3, "restitution_coeff": e3
         }
 
     pend_list = [pend1, pend2, pend3]

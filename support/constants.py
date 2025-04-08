@@ -1,10 +1,11 @@
 """
-CS1 24fa - Assignment 4
 Constants required for a Newton's cradle simulation.
 """
 from vpython import color, pi, textures, vector  # type: ignore
 
 from support.types import VPythonColor, VPythonTexture
+
+import pandas as pd
 
 GRAV: float = 9.81  # gravitational acceleration in m/s^2
 R: float = 0.2  # cord length in meters, functions as size parameter for whole system
@@ -12,10 +13,10 @@ THETA_INIT: float = -30 * pi / 180  # initial angle of 1st pendulum in radians
 
 DT: float = 0.005  # timestep (between 0.000005 [slo-mo] and 0.01 [normal])
 
-# TODO 0.1: Choose the relevant range of cells in the spreadsheet
-RANGE: str = ""
-# TODO 0.2: Enter the relevant spreadsheet ID 
-SPREADSHEET_ID: str = ""
+DF1_FP = "support/DF1.csv"
+DF2_FP = "support/DF2.csv"
+DF3_FP = "support/DF3.csv"
+NC_FP = "src/newton_cradle_pends.csv"
 
 # Define color and texture dictionaries that map strings -> VPython attributes
 COLOR_MAP: dict[str, VPythonColor] = {
@@ -45,3 +46,13 @@ TEXTURE_MAP: dict[str, VPythonTexture] = {
     "wood": textures.wood,
     "wood_old": textures.wood_old,
 }
+
+PENDULUM_ATTRIBUTES: list[str] = [
+    "mass", 
+    "restitution_coeff", 
+    "color", 
+    "texture", 
+    "objects", 
+    "theta", 
+    "omega"
+]

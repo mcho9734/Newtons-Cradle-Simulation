@@ -32,13 +32,13 @@ def test_handle_two_bobs_collision(pos1, omega1, m1, rad1, e1,
                          reverse_expected_omega1, reverse_expected_omega2):
     bob1 = FakeBob(pos1, rad1, color.white, textures.metal)
     pend1 = {
-            "pendulum": (1, bob1, 1),
-            "theta": 0.5, "omega": omega1, "masses": m1, "restitution_coeffs": e1}
+            "objects": (1, bob1, 1),
+            "theta": 0.5, "omega": omega1, "mass": m1, "restitution_coeff": e1}
     
     bob2 = FakeBob(pos2, rad2, color.white, textures.metal)
     pend2 = {
-            "pendulum": (1, bob2, 1),
-            "theta": 0.1, "omega": omega2, "masses": m2, "restitution_coeffs": e2
+            "objects": (1, bob2, 1),
+            "theta": 0.1, "omega": omega2, "mass": m2, "restitution_coeff": e2
         }
     r1 = 1
 
@@ -71,14 +71,14 @@ def test_handle_two_bobs_collision(pos1, omega1, m1, rad1, e1,
 def test_handle_two_bobs_no_collision(omega1, omega2, rad1, rad2, pos1, pos2):
     bob1 = FakeBob(pos1, rad1, color.white, textures.metal)
     pend1 = {
-        "pendulum": (1, bob1, 1),
-        "theta": 0.5, "omega": omega1, "masses": 1, "restitution_coeffs": 1
+        "objects": (1, bob1, 1),
+        "theta": 0.5, "omega": omega1, "mass": 1, "restitution_coeffs": 1
     }
 
     bob2 = FakeBob(pos2, rad2, color.white, textures.metal)
     pend2 = {
-        "pendulum": (1, bob2, 1),
-        "theta": 0.1, "omega": omega2, "masses": 2, "restitution_coeffs": 0
+        "objects": (1, bob2, 1),
+        "theta": 0.1, "omega": omega2, "mass": 2, "restitution_coeffs": 0
     }
 
     r1 = 1

@@ -1,5 +1,4 @@
 """
-CS1 24fa - Assignment 4
 Helper functions to make a pendulum.
 """
 
@@ -77,7 +76,7 @@ def make_cord(cord_pos: vector,
     return cylinder(pos=cord_pos, axis=axis, radius=r_param/50, color=clr)
 
 
-def make_pendulum(axle_pos: vector,
+def make_objects_of_pendulum(axle_pos: vector,
                   r_param: float,
                   theta: float,
                   bob_color: VPythonColor = color.white,
