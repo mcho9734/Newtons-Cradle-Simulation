@@ -7,9 +7,6 @@ from support.pendulum import make_objects_of_pendulum
 from support.constants import *
 from src.pds_helper import extract_and_convert
 
-import pandas as pd
-
-
 # TODO 1: write the following 5 functions using relevant helper functions from 'pds_helper'.
 def uniform_mass_newton_cradle(relative_filepath: str, mass: float):
     """
