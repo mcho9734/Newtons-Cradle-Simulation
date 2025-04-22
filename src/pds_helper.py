@@ -32,9 +32,3 @@ def write_to_csv(pend_list):
     """
     df = pd.DataFrame.from_dict(pend_list)
     df.to_csv(NC_FP, index=False)  
-
-
-# Provided
-if __name__ == "__main__":
-    print(pd.read_csv(NC_FP))
-    print(extract_and_convert(NC_FP))
