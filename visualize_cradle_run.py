@@ -4,6 +4,7 @@ Helper functions and implementation of a Newton's cradle simulation.
 
 from vpython import mag, scene, rate
 
+from support.types import PendulumEntry
 from support.constants import NC_FP, DT, GRAV, R, THETA_INIT
 from src.pds_helper import write_to_csv
 from src.special_cradles import uniform_mass_newton_cradle, uniform_e_newton_cradle, elastic_newton_cradle, inelastic_newton_cradle, make_newton_cradle
@@ -11,7 +12,12 @@ from src.swinging import full_swing_update
 
 scene.title = "Newton's cradle"
 
-def handle_collision(e: float, omega1: float, omega2: float, m1: float, m2: float, r_param: float):
+def handle_collision(e: float, 
+                     omega1: float, 
+                     omega2: float,
+                     m1: float, 
+                     m2: float, 
+                     r_param: float) -> tuple[float, float]:
     """
     In case two bobs collide, handles the physics (momentum conservation).
 
@@ -29,14 +35,17 @@ def handle_collision(e: float, omega1: float, omega2: float, m1: float, m2: floa
     # TODO 4: Use the physics derivation provided to update velocities post collision
     ...
 
-def handle_two_bobs(pend1, pend2, r_param):
+
+def handle_two_bobs(pend1: PendulumEntry, 
+                    pend2: PendulumEntry, 
+                    r_param: float) -> None:
     """
     Handles the collisions and updates of 2 pendula in the cradle.
 
     Args:
-        pend1 (dict): dictionary representing 1st pendulum, 
+        pend1 (PendulumEntry): dictionary representing 1st pendulum, 
                         with keys as physical attributes
-        pend2 (dict): dictionary representing 1st pendulum, 
+        pend2 (PendulumEntry): dictionary representing 2nd pendulum, 
                         with keys as physical attributes
         r_param (float): size parameter used to define pendulum components
     """
@@ -44,13 +53,16 @@ def handle_two_bobs(pend1, pend2, r_param):
     ...
 
 
-def newton_cradle_tick(pend_list, r_param, dt, g):
+def newton_cradle_tick(pend_list: list[PendulumEntry], 
+                       r_param: float, 
+                       dt: float, 
+                       g: float) -> None:
     """
     Performs one 'tick' of the entire Newton's cradle (propagates any
     motion throughout all the pendula).
 
     Args:
-        pend_list (list[dict]): list of pendulum dictionaries, 
+        pend_list (list[PendulumEntry]): list of pendulum dictionaries, 
                         with keys as physical attributes
         r_param (float): size parameter used to define pendulum components
         dt (float): time step of update

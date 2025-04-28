@@ -72,13 +72,13 @@ def test_handle_two_bobs_no_collision(omega1, omega2, rad1, rad2, pos1, pos2):
     bob1 = FakeBob(pos1, rad1, color.white, textures.metal)
     pend1 = {
         "objects": (1, bob1, 1),
-        "theta": 0.5, "omega": omega1, "mass": 1, "restitution_coeffs": 1
+        "theta": 0.5, "omega": omega1, "mass": 1, "restitution_coeff": 1
     }
 
     bob2 = FakeBob(pos2, rad2, color.white, textures.metal)
     pend2 = {
         "objects": (1, bob2, 1),
-        "theta": 0.1, "omega": omega2, "mass": 2, "restitution_coeffs": 0
+        "theta": 0.1, "omega": omega2, "mass": 2, "restitution_coeff": 0
     }
 
     r1 = 1

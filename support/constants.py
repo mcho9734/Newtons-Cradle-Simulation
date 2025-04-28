@@ -46,13 +46,3 @@ TEXTURE_MAP: dict[str, VPythonTexture] = {
     "wood": textures.wood,
     "wood_old": textures.wood_old,
 }
-
-PENDULUM_ATTRIBUTES: list[str] = [
-    "mass", 
-    "restitution_coeff", 
-    "color", 
-    "texture", 
-    "objects", 
-    "theta", 
-    "omega"
-]
