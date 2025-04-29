@@ -8,8 +8,8 @@ VPythonTexture = str
 Pendulum = tuple[box, sphere, cylinder]
 
 class PendulumEntry(TypedDict):
-    mass: str
-    restitution_coeff: str
+    mass: float
+    restitution_coeff: float
     color: str
     texture: str
     objects: Pendulum

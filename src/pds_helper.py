@@ -2,7 +2,7 @@ import pandas as pd
 from support.constants import NC_FP
 from support.types import PendulumEntry
 
-def extract_and_convert(relative_filepath:str)-> list[PendulumEntry] | None:
+def extract_and_convert(relative_filepath:str)-> list[PendulumEntry]:
     """
     Creates a list of pendula given a CSV file.
 

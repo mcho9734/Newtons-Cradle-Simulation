@@ -59,7 +59,7 @@ def swing_update(pend: PendulumEntry,
     pend["omega"] = omega_new
 
 
-def full_swing_update(pend_list: list[dict[str, float]], 
+def full_swing_update(pend_list: list[PendulumEntry], 
                       r_param: float, 
                       dt: float, 
                       g: float) -> None:
