@@ -2,9 +2,18 @@
 Helper functions and implementation of a Newton's cradle simulation.
 """
 
-from vpython import sin, cos, vector
+from vpython import (  # type: ignore
+    cos,  # type: ignore
+    sin,  # type: ignore
+    vector,  # type: ignore
+)
+from support.types import PendulumEntry
 
-def angle_update(omega: float, theta: float, r_param: float, dt: float, g: float):
+def angle_update(omega: float, 
+                 theta: float, 
+                 r_param: float, 
+                 dt: float, 
+                 g: float) -> tuple[float, float]:
     """
     Updates the angle and angular velocity of a pendulum system. 
 
@@ -18,12 +27,16 @@ def angle_update(omega: float, theta: float, r_param: float, dt: float, g: float
     Returns:
         (tuple[float, float]): time-updated omega, theta    
     """
-    # TODO 2: Update angular components of a pendulum with the derivation provided
+    # TODO 2: Update angular components of a pendulum with the derivation 
+    # provided
     ...
 
 
 # Provided
-def swing_update(pend, r_param: float, dt: float, g: float):
+def swing_update(pend: PendulumEntry, 
+                 r_param: float, 
+                 dt: float, 
+                 g: float) -> None:
     """
     Updates the angle & position of the pendulum components in a single swing.
 
@@ -36,17 +49,20 @@ def swing_update(pend, r_param: float, dt: float, g: float):
     theta = pend["theta"]
     omega = pend["omega"]
 
-    axle, bob, cord = pend["objects"]
+    axle, bob, cord = pend["objects"] # type: ignore
 
     omega_new, theta_new = angle_update(omega, theta, r_param, dt, g)
-    bob.pos = axle.pos + r_param * vector(sin(theta_new), -cos(theta_new), 0)
-    cord.axis = bob.pos - axle.pos
+    bob.pos = axle.pos + r_param * vector(sin(theta_new), -cos(theta_new), 0) # type: ignore
+    cord.axis = bob.pos - axle.pos # type: ignore
 
     pend["theta"] = theta_new
     pend["omega"] = omega_new
 
 
-def full_swing_update(pend_list, r_param: float, dt: float, g: float):
+def full_swing_update(pend_list: list[PendulumEntry], 
+                      r_param: float, 
+                      dt: float, 
+                      g: float) -> None:
     """
     Updates the omegas for all the pendula in the cradle, updating each
     pendulum dictionary. 

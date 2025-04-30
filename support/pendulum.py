@@ -16,6 +16,36 @@ from vpython import (  # type: ignore
 from support.types import Pendulum, VPythonColor, VPythonTexture
 
 
+def make_objects_of_pendulum(axle_pos: vector,
+                  r_param: float,
+                  theta: float,
+                  bob_color: VPythonColor = color.white,
+                  bob_texture: VPythonTexture = textures.metal,
+                  ) -> Pendulum:
+    """
+    Builds a pendulum with a bob, axle and cord. 
+    
+    Args:
+        axle_pos (VPython vector): position of center of axle
+        r_param (float): size parameter used to define pendulum components
+        theta (float); angle of the bob with respect to the axle
+        bob_color (optional, VPython color): color of bob, defaults to white
+        bob_texture (optional, VPython texture): texture of bob, defaults to wood
+
+    Returns:
+        (VPython box, VPython sphere, VPython cylinder): pendulum axle, bob, cord
+    """
+    axle = make_axle(axle_pos, r_param)
+
+    bob_pos = axle.pos + r_param * vector(sin(theta), -cos(theta), 0)
+    bob = make_bob(bob_pos, r_param, bob_color, bob_texture)
+    
+    cord_axis = bob.pos - axle.pos
+    cord = make_cord(axle.pos, cord_axis, r_param)
+
+    return axle, bob, cord
+
+
 def make_bob(bob_pos: vector,
              r_param: float,
              clr: VPythonColor,
@@ -74,33 +104,3 @@ def make_cord(cord_pos: vector,
         (VPython cylinder): cylinder representing pendulum cord
     """
     return cylinder(pos=cord_pos, axis=axis, radius=r_param/50, color=clr)
-
-
-def make_objects_of_pendulum(axle_pos: vector,
-                  r_param: float,
-                  theta: float,
-                  bob_color: VPythonColor = color.white,
-                  bob_texture: VPythonTexture = textures.metal,
-                  ) -> Pendulum:
-    """
-    Builds a pendulum with a bob, axle and cord. 
-    
-    Args:
-        axle_pos (VPython vector): position of center of axle
-        r_param (float): size parameter used to define pendulum components
-        theta (float); angle of the bob with respect to the axle
-        bob_color (optional, VPython color): color of bob, defaults to white
-        bob_texture (optional, VPython texture): texture of bob, defaults to wood
-
-    Returns:
-        (VPython box, VPython sphere, VPython cylinder): pendulum axle, bob, cord
-    """
-    axle = make_axle(axle_pos, r_param)
-
-    bob_pos = axle.pos + r_param * vector(sin(theta), -cos(theta), 0)
-    bob = make_bob(bob_pos, r_param, bob_color, bob_texture)
-    
-    cord_axis = bob.pos - axle.pos
-    cord = make_cord(axle.pos, cord_axis, r_param)
-
-    return axle, bob, cord

@@ -2,16 +2,16 @@
 Helper functions and implementation of a Newton's cradle simulation.
 """
 
-from vpython import vector
-from support.pendulum import make_objects_of_pendulum
-from support.constants import *
 from src.pds_helper import extract_and_convert
-
-import pandas as pd
+from vpython import vector  # type: ignore
+from support.constants import *
+from support.pendulum import make_objects_of_pendulum # type: ignore
+from support.types import PendulumEntry
 
 
 # TODO 1: write the following 5 functions using relevant helper functions from 'pds_helper'.
-def uniform_mass_newton_cradle(relative_filepath: str, mass: float):
+def uniform_mass_newton_cradle(relative_filepath: str, 
+                               mass: float) -> list[PendulumEntry]:
     """
     Creates a list of pendula and updates them to have the same mass. 
 
@@ -29,7 +29,8 @@ def uniform_mass_newton_cradle(relative_filepath: str, mass: float):
     ...
 
 
-def uniform_e_newton_cradle(relative_filepath: str, e_val: float):
+def uniform_e_newton_cradle(relative_filepath: str, 
+                            e_val: float) -> list[PendulumEntry]:
     """
     Creates a list of pendula and updates them to have the same coefficient of
     restitution. 
@@ -48,7 +49,7 @@ def uniform_e_newton_cradle(relative_filepath: str, e_val: float):
     ...
 
 
-def elastic_newton_cradle(relative_filepath: str):
+def elastic_newton_cradle(relative_filepath: str) -> list[PendulumEntry]:
     """
     Creates a list of pendula and updates them to have perfectly elastic
     collisions with each other. 
@@ -65,7 +66,7 @@ def elastic_newton_cradle(relative_filepath: str):
     ...
 
 
-def inelastic_newton_cradle(relative_filepath: str):
+def inelastic_newton_cradle(relative_filepath: str) -> list[PendulumEntry]:
     """
     Creates a list of pendula and updates them to have perfectly inelastic
     collisions with each other. 
@@ -82,7 +83,9 @@ def inelastic_newton_cradle(relative_filepath: str):
     ...
 
 
-def make_newton_cradle(relative_filepath: str, r_param: float, theta_init: float):
+def make_newton_cradle(relative_filepath: str, 
+                       r_param: float, 
+                       theta_init: float) -> list[PendulumEntry]:
     """
     Uses information from a specific CSV file to make a list of 
     dictionaries representing each pendula and their physical attributes.
