@@ -2,6 +2,8 @@ import pandas as pd
 from support.constants import NC_FP
 from support.types import PendulumEntry
 
+ORIENT_MODE = "index"
+
 def extract_and_convert(relative_filepath:str)-> list[PendulumEntry]:
     """
     Creates a list of pendula given a CSV file.
@@ -15,9 +17,9 @@ def extract_and_convert(relative_filepath:str)-> list[PendulumEntry]:
     
     """
     df = pd.read_csv(relative_filepath) # type: ignore
-    bad_rep = df.to_dict(orient="index") # type: ignore
+    bad_rep = df.to_dict(orient=ORIENT_MODE) # type: ignore
 
-    # TODO 0: Fix the bad representation
+    # TODO 0.0: Fix the bad representation
     ...
 
 
@@ -31,4 +33,4 @@ def write_to_csv(pend_list: list[PendulumEntry]) -> None:
         a pendulum, with keys as physical attributes
     """
     df = pd.DataFrame.from_dict(pend_list) # type: ignore
-    df.to_csv(NC_FP, index=False)  
+    df.to_csv(NC_FP, index=False)
