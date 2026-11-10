@@ -12,11 +12,18 @@ from src.swinging import full_swing_update
 
 scene.title = "Newton's cradle"
 
-def handle_collision(e: float, 
-                     omega1: float, 
+GRACE_FACTOR: float = 1.05
+MASS: str = "mass"
+RESTITUTION_COEFF: str = "restitution_coeff"
+OBJECTS: str = "objects"
+OMEGA: str = "omega"
+
+
+def handle_collision(e: float,
+                     omega1: float,
                      omega2: float,
-                     m1: float, 
-                     m2: float, 
+                     m1: float,
+                     m2: float,
                      r_param: float) -> tuple[float, float]:
     """
     In case two bobs collide, handles the physics (momentum conservation).
@@ -32,12 +39,15 @@ def handle_collision(e: float,
     Returns:
         (tuple[float, float]): post-collision omegas of 1st, 2nd pendula
     """
-    # TODO 4: Use the physics derivation provided to update velocities post collision
-    ...
+    v1 = r_param * omega1
+    v2 = r_param * omega2
+    new_omega1 = (m1 * v1 + m2 * v2 - m2 * e * (v1 - v2)) / (m1 + m2) / r_param
+    new_omega2 = (m1 * v1 + m2 * v2 + m1 * e * (v1 - v2)) / (m1 + m2) / r_param
+    return (new_omega1, new_omega2)
 
 
-def handle_two_bobs(pend1: PendulumEntry, 
-                    pend2: PendulumEntry, 
+def handle_two_bobs(pend1: PendulumEntry,
+                    pend2: PendulumEntry,
                     r_param: float) -> None:
     """
     Handles the collisions and updates of 2 pendula in the cradle.
@@ -49,13 +59,22 @@ def handle_two_bobs(pend1: PendulumEntry,
                         with keys as physical attributes
         r_param (float): size parameter used to define pendulum components
     """
-    # TODO 5: Handle pairwise pendulum motion and collisions
-    ...
+    e1: float = pend1[RESTITUTION_COEFF]
+    m1: float = pend1[MASS]
+    m2: float = pend2[MASS]
+    bob1 = pend1[OBJECTS][1]
+    bob2 = pend2[OBJECTS][1]
+    omega1 = pend1[OMEGA]
+    omega2 = pend2[OMEGA]
+    if mag(bob2.pos - bob1.pos) <= GRACE_FACTOR * (bob1.radius + bob2.radius):
+        new_omegas = handle_collision(e1, omega1, omega2, m1, m2, r_param)
+        pend1[OMEGA] = new_omegas[0]
+        pend2[OMEGA] = new_omegas[1]
 
 
-def newton_cradle_tick(pend_list: list[PendulumEntry], 
-                       r_param: float, 
-                       dt: float, 
+def newton_cradle_tick(pend_list: list[PendulumEntry],
+                       r_param: float,
+                       dt: float,
                        g: float) -> None:
     """
     Performs one 'tick' of the entire Newton's cradle (propagates any
@@ -68,18 +87,19 @@ def newton_cradle_tick(pend_list: list[PendulumEntry],
         dt (float): time step of update
         g (float): gravitational acceleration
     """
-    # TODO 6: Perform one step of the newton cradle
-    ...
+    full_swing_update(pend_list, r_param, dt, g)
+    for i in range(len(pend_list) - 1):
+        handle_two_bobs(pend_list[i], pend_list[i + 1], r_param)
 
 
 if __name__ == "__main__":
-    # TODO 7.1: use a helper function to make pend_list with
-    #   a filepath called NC_FP, R and THETA_INIT
-    pend_list = ...
+
+    # changed_pendlist = inelastic_newton_cradle(NC_FP)
+    # write_to_csv(changed_pendlist)
+
+    pend_list = make_newton_cradle(NC_FP, R, THETA_INIT)
 
     done = False
     while not done:
-        rate(1/DT)  # The rate to be included in the animation
-
-        # TODO 7.2: Use another helper function to perform a timestep of the
-        # Newton's cradle
+        rate(1 / DT)  # type: ignore # The rate to be included in the animation
+        newton_cradle_tick(pend_list, R, DT, GRAV)

@@ -5,15 +5,25 @@ Helper functions and implementation of a Newton's cradle simulation.
 from src.pds_helper import extract_and_convert
 from vpython import vector  # type: ignore
 from support.constants import *
-from support.pendulum import make_objects_of_pendulum # type: ignore
+from support.pendulum import make_objects_of_pendulum  # type: ignore
 from support.types import PendulumEntry
 
+MASS: str = "mass"
+THETA: str = "theta"
+OMEGA: str = "omega"
+OBJECTS: str = "objects"
+COLOR: str = "color"
+TEXTURE: str = "texture"
+RESTITUTION_COEFF: str = "restitution_coeff"
+FOUR: int = 4
+FIVE: int = 5
+POINT_ONE: float = 0.1
 
-# TODO 1: write the following 5 functions using relevant helper functions from 'pds_helper'.
-def uniform_mass_newton_cradle(relative_filepath: str, 
+
+def uniform_mass_newton_cradle(relative_filepath: str,
                                mass: float) -> list[PendulumEntry]:
     """
-    Creates a list of pendula and updates them to have the same mass. 
+    Creates a list of pendula and updates them to have the same mass.
 
     Args:
         relative_filepath (str): filepath to access CSV with pendula data
@@ -23,30 +33,31 @@ def uniform_mass_newton_cradle(relative_filepath: str,
         (list[dict]): list of dictionaries, each dictionary corresponding to
         a pendulum, with keys as physical attributes
     """
-    # TODO: create a list that will serve as the required nested list
-    # as described in the guide using a helper function. Then, for each pendulum, 
-    # set all the mass values in the dictionary to the required argument mass value
-    ...
+    output: list[PendulumEntry] = extract_and_convert(relative_filepath)
+    for pend in output:
+        pend[MASS] = mass
+    return output
 
 
-def uniform_e_newton_cradle(relative_filepath: str, 
+def uniform_e_newton_cradle(relative_filepath: str,
                             e_val: float) -> list[PendulumEntry]:
     """
     Creates a list of pendula and updates them to have the same coefficient of
-    restitution. 
+    restitution.
 
     Args:
         relative_filepath (str): filepath to access CSV with pendula data
-        e_val (float): coefficient of restitution to be uniformly applied to each 
+        e_val (float): coefficient of restitution to be uniformly applied to each
         pendulum
 
     Returns:
         (list[dict]): list of dictionaries, each dictionary corresponding to
         a pendulum, with keys as physical attributes
     """
-    # TODO: similar to the previous function, but you will be updating
-    # the coefficients of restitution with the relevant value instead 
-    ...
+    output: list[PendulumEntry] = extract_and_convert(relative_filepath)
+    for pend in output:
+        pend[RESTITUTION_COEFF] = e_val
+    return output
 
 
 def elastic_newton_cradle(relative_filepath: str) -> list[PendulumEntry]:
@@ -56,14 +67,12 @@ def elastic_newton_cradle(relative_filepath: str) -> list[PendulumEntry]:
 
     Args:
         relative_filepath (str): filepath to access CSV with pendula data
-    
+
     Returns:
         (list[dict]): list of dictionaries, each dictionary corresponding to
         a pendulum, with keys as physical attributes
     """
-    # TODO: Use a helper function to return a list of pendula with the 
-    # elastic coefficient of restitution value
-    ...
+    return uniform_e_newton_cradle(relative_filepath, 1)
 
 
 def inelastic_newton_cradle(relative_filepath: str) -> list[PendulumEntry]:
@@ -73,18 +82,16 @@ def inelastic_newton_cradle(relative_filepath: str) -> list[PendulumEntry]:
 
     Args:
         relative_filepath (str): filepath to access CSV with pendula data
-            
+
     Returns:
         (list[dict]): list of dictionaries, each dictionary corresponding to
         a pendulum, with keys as physical attributes
     """
-    # TODO: Use a helper function to return a list of pendula with
-    # the inelastic coefficient of restitution value 
-    ...
+    return uniform_e_newton_cradle(relative_filepath, 0)
 
 
-def make_newton_cradle(relative_filepath: str, 
-                       r_param: float, 
+def make_newton_cradle(relative_filepath: str,
+                       r_param: float,
                        theta_init: float) -> list[PendulumEntry]:
     """
     Uses information from a specific CSV file to make a list of 
@@ -99,15 +106,15 @@ def make_newton_cradle(relative_filepath: str,
         (list[dict]): list of dictionaries, each dictionary corresponding
         to each pendulum, with keys representing physical attributes
     """
-    # TODO: Use a helper function from 'pds_helper.py' to make a 'pend_list'
-    
-
-    # TODO: write a 'for' loop that goes through each pendulum dictionary
-    # in 'pend_list' and:
-        # finds the bob color, bob texture, and calculates the axle position
-        # makes a pendulum with the aforementioned attributes
-        # assigns that pendulum as the value of the key 'objects'
-
-        # initializes the value for the key 'theta' depending on the value of i
-        # initializes the value for the key 'omega'
-    ...
+    output: list[PendulumEntry] = extract_and_convert(relative_filepath)
+    for i in range(len(output)):
+        cur_pend = output[i]
+        cur_pend[THETA] = 0
+        if i == 0:
+            cur_pend[THETA] = theta_init
+        cur_pend[OMEGA] = 0
+        axle_pos = vector((-POINT_ONE + r_param / FOUR * i),
+                          r_param / FIVE, 0)  # type: ignore
+        cur_pend[OBJECTS] = make_objects_of_pendulum(
+            axle_pos, r_param, cur_pend[THETA], COLOR_MAP[cur_pend[COLOR]], TEXTURE_MAP[cur_pend[TEXTURE]])
+    return output
