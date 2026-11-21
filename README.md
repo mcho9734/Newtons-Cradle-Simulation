@@ -7,4 +7,4 @@ The vpython library is used to perform the physics calculations of the simulatio
 ### Features
 The special_cradles.py file contains properties of the cradle that can be changed, such as mass, coefficient of restitution, and color.<br>
 
-Code scaffolding is from the CS1a course at Caltech.
+Code scaffolding is from the CS1a course at Caltech. Main logic for functions coded by self.
